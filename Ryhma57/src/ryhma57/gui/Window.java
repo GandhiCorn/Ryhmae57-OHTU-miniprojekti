@@ -6,8 +6,10 @@ import java.awt.event.*;
 public class Window extends JFrame implements ActionListener {
     static final String CREATE = "create";
     static final String GENERATE = "generate";
+    private Application app;
 
-    public Window() {
+    public Window(Application app) {
+        this.app = app;
         this.setTitle("Application");
         /* set some default size so that window isn't 0x0 size */
         /*XXX we could load window geometry from config file */
@@ -18,10 +20,12 @@ public class Window extends JFrame implements ActionListener {
     }
 
     public void createDialog() {
+        JFormattedTextField input;
         JPanel mainPane = new JPanel(new BorderLayout());
         JPanel labelPane = new JPanel(new GridLayout(0,1));
         JPanel inputPane = new JPanel(new GridLayout(0,1));
-        JFormattedTextField input;
+
+        mainPane.setBorder(BorderFactory.createTitledBorder("Create book reference"));
 
         labelPane.add(new JLabel("Author:"));
         input = new JFormattedTextField();
@@ -58,8 +62,6 @@ public class Window extends JFrame implements ActionListener {
         input.setColumns(10);
         inputPane.add(input);
 
-        //mainPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        mainPane.setBorder(BorderFactory.createTitledBorder("Create book"));
         mainPane.add(labelPane, BorderLayout.CENTER);
         mainPane.add(inputPane, BorderLayout.LINE_END);
         this.add(mainPane, BorderLayout.NORTH);
@@ -79,9 +81,10 @@ public class Window extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getActionCommand() == CREATE) {
-            System.out.println("Create the book in the backend");
+            //TODO get the contents of the input fields.
+            this.app.createNewBookReference();
         } else if(event.getActionCommand() == GENERATE) {
-            System.out.println("Generate the bibtext file in the backend");
+            this.app.generateBibTex();
         }
     }
 }

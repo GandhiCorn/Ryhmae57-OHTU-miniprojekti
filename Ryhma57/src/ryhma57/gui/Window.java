@@ -1,12 +1,18 @@
 package ryhma57.gui;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import java.util.EnumMap;
+import javax.swing.*;
+import ryhma57.backend.BibtexReferenceField;
 
 public class Window extends JFrame implements ActionListener {
     static final String CREATE = "create";
     static final String GENERATE = "generate";
     private Application app;
+
+    /* this is bit ugly */
+    private EnumMap<BibtexReferenceField, JFormattedTextField> fields;
 
     public Window(Application app) {
         this.app = app;
@@ -16,10 +22,21 @@ public class Window extends JFrame implements ActionListener {
         this.setSize(600, 400);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        this.fields = new EnumMap<>(BibtexReferenceField.class);
         this.createDialog();
     }
 
-    public void createDialog() {
+    private void generateField(JPanel labelPane, JPanel inputPane, BibtexReferenceField field) {
+        JFormattedTextField input;
+
+        labelPane.add(new JLabel(field.getName() + ":"));
+        input = new JFormattedTextField();
+        input.setColumns(10);
+        this.fields.put(field, input);
+        inputPane.add(input);
+    }
+
+    private void createDialog() {
         JFormattedTextField input;
         JPanel mainPane = new JPanel(new BorderLayout());
         JPanel labelPane = new JPanel(new GridLayout(0,1));
@@ -27,40 +44,20 @@ public class Window extends JFrame implements ActionListener {
 
         mainPane.setBorder(BorderFactory.createTitledBorder("Create book reference"));
 
-        labelPane.add(new JLabel("Author:"));
-        input = new JFormattedTextField();
-        input.setColumns(10);
-        inputPane.add(input);
+        generateField(labelPane, inputPane, BibtexReferenceField.AUTHOR);
+        generateField(labelPane, inputPane, BibtexReferenceField.EDITOR);
+        generateField(labelPane, inputPane, BibtexReferenceField.TITLE);
+        generateField(labelPane, inputPane, BibtexReferenceField.PUBLISHER);
+        generateField(labelPane, inputPane, BibtexReferenceField.YEAR);
 
-        labelPane.add(new JLabel("Title:"));
-        input = new JFormattedTextField();
-        input.setColumns(10);
-        inputPane.add(input);
+        generateField(labelPane, inputPane, BibtexReferenceField.VOLUME);
+        generateField(labelPane, inputPane, BibtexReferenceField.NUMBER);
+        generateField(labelPane, inputPane, BibtexReferenceField.SERIES);
+        generateField(labelPane, inputPane, BibtexReferenceField.ADDRESS);
+        generateField(labelPane, inputPane, BibtexReferenceField.EDITION);
+        generateField(labelPane, inputPane, BibtexReferenceField.MONTH);
+        generateField(labelPane, inputPane, BibtexReferenceField.NOTE);
 
-        labelPane.add(new JLabel("Year:"));
-        input = new JFormattedTextField();
-        input.setColumns(10);
-        inputPane.add(input);
-
-        labelPane.add(new JLabel("Journal:"));
-        input = new JFormattedTextField();
-        input.setColumns(10);
-        inputPane.add(input);
-
-        labelPane.add(new JLabel("Volume:"));
-        input = new JFormattedTextField();
-        input.setColumns(10);
-        inputPane.add(input);
-
-        labelPane.add(new JLabel("Number:"));
-        input = new JFormattedTextField();
-        input.setColumns(10);
-        inputPane.add(input);
-
-        labelPane.add(new JLabel("Pages:"));
-        input = new JFormattedTextField();
-        input.setColumns(10);
-        inputPane.add(input);
 
         mainPane.add(labelPane, BorderLayout.CENTER);
         mainPane.add(inputPane, BorderLayout.LINE_END);
@@ -80,10 +77,18 @@ public class Window extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getActionCommand() == CREATE) {
-            //TODO get the contents of the input fields.
-            this.app.createNewBookReference();
-        } else if(event.getActionCommand() == GENERATE) {
+        if(event.getActionCommand().equals(CREATE)) {
+            EnumMap<BibtexReferenceField, String> set;
+            set = new EnumMap<>(BibtexReferenceField.class);
+
+            for(BibtexReferenceField field : this.fields.keySet()) {
+                JFormattedTextField input;
+                input = this.fields.get(field);
+                set.put(field, input.getText());
+            }
+            this.app.createNewBookReference(set);
+
+        } else if(event.getActionCommand().equals(GENERATE)) {
             this.app.generateBibTex();
         }
     }

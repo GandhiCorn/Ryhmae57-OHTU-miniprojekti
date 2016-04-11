@@ -44,6 +44,7 @@ public class Window extends JFrame implements ActionListener {
 
         mainPane.setBorder(BorderFactory.createTitledBorder("Create book reference"));
 
+        generateField(labelPane, inputPane, BibtexReferenceField.ID);
         generateField(labelPane, inputPane, BibtexReferenceField.AUTHOR);
         generateField(labelPane, inputPane, BibtexReferenceField.EDITOR);
         generateField(labelPane, inputPane, BibtexReferenceField.TITLE);

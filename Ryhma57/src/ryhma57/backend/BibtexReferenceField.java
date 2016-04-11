@@ -6,6 +6,9 @@ package ryhma57.backend;
  * http://get-software.net/biblio/bibtex/base/btxdoc.pdf
  */
 public enum BibtexReferenceField {
+    /* The id field should only be used in gui. */
+    ID("id"),
+
     ADDRESS("address"),
     ANNOTE("annote"),
     AUTHOR("author"),

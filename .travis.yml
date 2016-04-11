@@ -1,4 +1,3 @@
 language: java
-script:
-	cd Ryhma57/
-	ant
+before_script: cd Ryhma57
+script: ant

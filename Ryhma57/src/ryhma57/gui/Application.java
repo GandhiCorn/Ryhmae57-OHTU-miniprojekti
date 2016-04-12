@@ -9,11 +9,19 @@ import java.util.logging.Logger;
 import ryhma57.backend.BibtexReferenceField;
 import ryhma57.backend.Book;
 import ryhma57.backend.Reference;
+import ryhma57.backend.ReferenceList;
 
 /**
  * This is the main class currently.
  */
 public class Application {
+    
+    private ReferenceList referenceList;
+    
+    public Application() {
+        this.referenceList = new ReferenceList();
+    }
+    
     public static void main(String[] args) {
         Application app = new Application();
         Window window;
@@ -29,7 +37,7 @@ public class Application {
 
         try {
             writer = new PrintWriter("database.bib", "UTF-8");
-            writer.print("Implement" /*this.referenceList.toBibTex()*/);
+            writer.print(this.referenceList.toBibTex());
             writer.close();
 
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
@@ -47,7 +55,7 @@ public class Application {
         String publisher = fields.get(BibtexReferenceField.PUBLISHER);
 
         Reference ref = new Book(id, author, title, year, publisher);
-        //this.referenceList.addReference(ref);
+        this.referenceList.addReference(ref);
 
         /* Alternative way to push the changes into backend */
         //Reference ref = new Reference();

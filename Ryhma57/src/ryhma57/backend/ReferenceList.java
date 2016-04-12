@@ -30,10 +30,12 @@ public class ReferenceList {
         return list;
     }
     
-    public void toBibtex() {
+    public String toBibTex() {
+        StringBuilder sb = new StringBuilder();
         for (Reference r : list) {
-            r.toBibTex();
+            sb.append(r.toBibTex()).append("\n");
         }
+        return sb.toString();
     }
     
     /* Metodi pelkkien kirjaolioiden saamiseksi

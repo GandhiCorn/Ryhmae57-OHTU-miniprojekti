@@ -1,7 +1,8 @@
-package ryhma57.backend;
+package ryhma57.references;
 
 import java.util.EnumMap;
 import java.util.EnumSet;
+import ryhma57.backend.BibtexReferenceField;
 
 public abstract class Reference {
     protected final EnumSet<BibtexReferenceField> existingFields;
@@ -28,5 +29,5 @@ public abstract class Reference {
         fields.put(field, value);
     }
 
-    abstract String toBibTex();
+    abstract public String toBibTex();
 }

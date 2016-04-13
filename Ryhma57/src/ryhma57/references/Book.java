@@ -1,11 +1,12 @@
-package ryhma57.backend;
+package ryhma57.references;
 
 import java.util.EnumSet;
+import ryhma57.backend.BibtexReferenceField;
 import static ryhma57.backend.BibtexReferenceField.*;
 
 public class Book extends Reference {
-    static EnumSet<BibtexReferenceField> existingFields;
-    static EnumSet<BibtexReferenceField> requiredFields;
+    private static EnumSet<BibtexReferenceField> existingFields;
+    private static EnumSet<BibtexReferenceField> requiredFields;
 
     static {
         Book.requiredFields = EnumSet.noneOf(BibtexReferenceField.class);
@@ -15,7 +16,6 @@ public class Book extends Reference {
         Book.requiredFields.add(YEAR);
         Book.requiredFields.add(PUBLISHER);
         Book.existingFields = Book.requiredFields.clone();
-        
     }
 
     public Book(String id, String author, String title, String year, String publisher) {

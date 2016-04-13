@@ -7,8 +7,8 @@ import java.util.EnumMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ryhma57.backend.BibtexReferenceField;
-import ryhma57.backend.Book;
-import ryhma57.backend.Reference;
+import ryhma57.references.Book;
+import ryhma57.references.Reference;
 import ryhma57.backend.ReferenceList;
 
 /**

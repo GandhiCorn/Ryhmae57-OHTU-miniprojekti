@@ -6,6 +6,7 @@ package ryhma57.backend;
  * and open the template in the editor.
  */
 
+import ryhma57.references.Book;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

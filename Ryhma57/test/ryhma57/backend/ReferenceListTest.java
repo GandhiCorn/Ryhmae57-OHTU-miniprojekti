@@ -1,6 +1,8 @@
 
 package ryhma57.backend;
 
+import ryhma57.references.Book;
+import ryhma57.references.Reference;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;

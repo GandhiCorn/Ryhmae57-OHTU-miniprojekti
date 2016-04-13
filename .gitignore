@@ -1,4 +1,5 @@
 /Ryhma57/nbproject/private/
 /Ryhma57/build/
-/Ryhma57/dist/
-.DS_store
+/Ryhma57/database.bib
+*.jar
+.DS_Store

@@ -19,7 +19,7 @@ public class Window extends JFrame implements ActionListener {
         this.setTitle("Application");
         /* set some default size so that window isn't 0x0 size */
         /*XXX we could load window geometry from config file */
-        this.setSize(600, 400);
+        this.setSize(600, 480);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         this.fields = new EnumMap<>(BibtexReferenceField.class);

@@ -9,7 +9,9 @@ import ryhma57.backend.BibtexReferenceField;
 public class Window extends JFrame implements ActionListener {
     static final String CREATE = "create";
     static final String GENERATE = "generate";
+    static final String CLEAR_LABEL = "clearLabel";
     private Application app;
+    private JLabel infoLabel;
 
     /* this is bit ugly */
     private EnumMap<BibtexReferenceField, JFormattedTextField> fields;
@@ -73,6 +75,10 @@ public class Window extends JFrame implements ActionListener {
         button = new JButton("Generate BibTeX file");
         button.addActionListener(this);
         button.setActionCommand(GENERATE);
+
+        this.infoLabel = new JLabel("");
+        this.add(this.infoLabel, BorderLayout.CENTER);
+
         this.add(button, BorderLayout.SOUTH);
     }
 
@@ -80,6 +86,8 @@ public class Window extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if(event.getActionCommand().equals(CREATE)) {
             EnumMap<BibtexReferenceField, String> set;
+            String error;
+            Timer timer;
             set = new EnumMap<>(BibtexReferenceField.class);
 
             for(BibtexReferenceField field : this.fields.keySet()) {
@@ -87,12 +95,23 @@ public class Window extends JFrame implements ActionListener {
                 input = this.fields.get(field);
                 set.put(field, input.getText());
             }
-            this.app.createNewBookReference(set);
+            error = this.app.createNewBookReference(set);
+            if(error != null) {
+                this.infoLabel.setText(error);
+                return;
+            }
+
+            this.infoLabel.setText("The reference was saved");
+            timer = new Timer(10000, this);
+            timer.start();
+            timer.setActionCommand(CLEAR_LABEL);
 
         } else if(event.getActionCommand().equals(GENERATE)) {
             this.app.generateBibTex();
             JOptionPane.showMessageDialog(this,
                 "BibTex file was generated.");
+        } else if(event.getActionCommand().equals(CLEAR_LABEL)) {
+            this.infoLabel.setText("");
         }
     }
 }

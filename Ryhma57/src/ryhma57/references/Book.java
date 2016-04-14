@@ -10,8 +10,8 @@ public class Book extends Reference {
 
     static {
         EnumSet<BibtexReferenceField> optionals;
-        Book.requiredFields = Reference.createFieldSet(ID,
-                AUTHOR, TITLE, YEAR, PUBLISHER);
+        Book.requiredFields = Reference.createFieldSet(AUTHOR,
+                TITLE, YEAR, PUBLISHER);
         optionals = Reference.createFieldSet(VOLUME,
                 NUMBER, SERIES, ADDRESS, EDITION, MONTH, NOTE);
 
@@ -21,7 +21,7 @@ public class Book extends Reference {
 
     public Book(String id, String author, String title, String year, String publisher) {
         super(existingFields, requiredFields);
-        setField(ID, id);
+        setID(id);
         setField(AUTHOR, author);
         setField(TITLE, title);
         setField(YEAR, year);
@@ -29,8 +29,8 @@ public class Book extends Reference {
     }
     
     public String toBibTex() {
-        return "@book{" + getField(ID) + ",\n" +
-                "author = {" + getField(ID) + "},\n" +
+        return "@book{" + getID() + ",\n" +
+                "author = {" + getField(AUTHOR) + "},\n" +
                 "title = {" + getField(TITLE) + "},\n" +
                 "year = {" + getField(YEAR) + "},\n" +
                 "publisher = {" + getField(PUBLISHER) + "},\n" + "}";

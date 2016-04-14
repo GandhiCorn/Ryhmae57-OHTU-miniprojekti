@@ -8,6 +8,7 @@ public abstract class Reference {
     protected final EnumSet<BibtexReferenceField> existingFields;
     protected final EnumSet<BibtexReferenceField> requiredFields;
     private EnumMap<BibtexReferenceField, String> fields;
+    private String id;
 
     /**
      * Helper function for creating the field sets.
@@ -40,6 +41,14 @@ public abstract class Reference {
         this.fields = new EnumMap<>(BibtexReferenceField.class);
         this.existingFields = existingFields;
         this.requiredFields = requiredFields;
+    }
+
+    public final String getID() {
+        return this.id;
+    }
+
+    public final void setID(String id) {
+        this.id = id;
     }
 
     public final String getField(BibtexReferenceField field) {

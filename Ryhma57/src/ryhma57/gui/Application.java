@@ -48,21 +48,14 @@ public class Application {
     public void createNewBookReference(EnumMap<BibtexReferenceField, String> fields) {
         System.out.println("Create the book reference in the backend");
 
-        String id = fields.get(BibtexReferenceField.ID);
-        String author = fields.get(BibtexReferenceField.AUTHOR);
-        String title = fields.get(BibtexReferenceField.TITLE);
-        String year = fields.get(BibtexReferenceField.YEAR);
-        String publisher = fields.get(BibtexReferenceField.PUBLISHER);
-
-        Reference ref = new Book(id, author, title, year, publisher);
+        Reference ref = new Book();
         this.referenceList.addReference(ref);
 
-        /* Alternative way to push the changes into backend */
-        //Reference ref = new Reference();
-        //this.referenceList.addReference(ref);
-        //
-        //for (BibtexReferenceField field : fields.keySet()) {
-        //    ref.setField(field, fields.get(field));
-        //}
+        ref.setID(fields.get(BibtexReferenceField.ID));
+        fields.remove(BibtexReferenceField.ID);
+
+        for (BibtexReferenceField field : fields.keySet()) {
+            ref.setField(field, fields.get(field));
+        }
     }
 }

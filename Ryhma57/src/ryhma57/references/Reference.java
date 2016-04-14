@@ -9,6 +9,32 @@ public abstract class Reference {
     protected final EnumSet<BibtexReferenceField> requiredFields;
     private EnumMap<BibtexReferenceField, String> fields;
 
+    /**
+     * Helper function for creating the field sets.
+     *
+     * @param fields
+     * @return Set that contains all the fields given as arguments
+     */
+    protected static EnumSet<BibtexReferenceField> createFieldSet(BibtexReferenceField... fields) {
+        EnumSet<BibtexReferenceField> set;
+        set = EnumSet.noneOf(BibtexReferenceField.class);
+
+        for (int i = 0; i < fields.length; ++i) {
+            set.add(fields[i]);
+        }
+        return set;
+    }
+
+    protected static EnumSet<BibtexReferenceField> createExistingSet(
+            EnumSet<BibtexReferenceField> required,
+            EnumSet<BibtexReferenceField> optionals) {
+        EnumSet<BibtexReferenceField> set;
+
+        set = required.copyOf(optionals);
+        set.addAll(required);
+        return set;
+    }
+
     protected Reference(EnumSet<BibtexReferenceField> existingFields,
             EnumSet<BibtexReferenceField> requiredFields) {
         this.fields = new EnumMap<>(BibtexReferenceField.class);

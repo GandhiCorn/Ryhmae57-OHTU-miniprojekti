@@ -9,13 +9,14 @@ public class Book extends Reference {
     private static EnumSet<BibtexReferenceField> requiredFields;
 
     static {
-        Book.requiredFields = EnumSet.noneOf(BibtexReferenceField.class);
-        Book.requiredFields.add(ID);
-        Book.requiredFields.add(AUTHOR);
-        Book.requiredFields.add(TITLE);
-        Book.requiredFields.add(YEAR);
-        Book.requiredFields.add(PUBLISHER);
-        Book.existingFields = Book.requiredFields.clone();
+        EnumSet<BibtexReferenceField> optionals;
+        Book.requiredFields = Reference.createFieldSet(ID,
+                AUTHOR, TITLE, YEAR, PUBLISHER);
+        optionals = Reference.createFieldSet(VOLUME,
+                NUMBER, SERIES, ADDRESS, EDITION, MONTH, NOTE);
+
+        Book.existingFields = Reference.createExistingSet(
+                Book.requiredFields, optionals);
     }
 
     public Book(String id, String author, String title, String year, String publisher) {

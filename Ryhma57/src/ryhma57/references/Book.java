@@ -10,7 +10,7 @@ public class Book extends Reference {
 
     static {
         Book.requiredFields = Reference.createFieldSet(AUTHOR,
-                TITLE, YEAR, PUBLISHER);
+                EDITOR, TITLE, YEAR, PUBLISHER);
         Book.optionalFields = Reference.createFieldSet(VOLUME,
                 NUMBER, SERIES, ADDRESS, EDITION, MONTH, NOTE);
         Book.existingFields = Reference.createExistingSet(

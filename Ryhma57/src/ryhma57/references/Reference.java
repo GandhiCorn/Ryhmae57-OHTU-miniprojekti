@@ -7,6 +7,7 @@ import ryhma57.backend.BibtexReferenceField;
 public abstract class Reference {
     protected final EnumSet<BibtexReferenceField> existingFields;
     protected final EnumSet<BibtexReferenceField> requiredFields;
+    private final String referenceType;
     private EnumMap<BibtexReferenceField, String> fields;
     private String id;
 
@@ -37,10 +38,12 @@ public abstract class Reference {
     }
 
     protected Reference(EnumSet<BibtexReferenceField> existingFields,
-            EnumSet<BibtexReferenceField> requiredFields) {
+            EnumSet<BibtexReferenceField> requiredFields,
+            String referenceType) {
         this.fields = new EnumMap<>(BibtexReferenceField.class);
         this.existingFields = existingFields;
         this.requiredFields = requiredFields;
+        this.referenceType = referenceType;
     }
 
     public final String getID() {
@@ -66,7 +69,8 @@ public abstract class Reference {
 
     final public String toBibTex() {
         StringBuilder sb = new StringBuilder();
-        sb.append("@book{").append(this.id).append(",\n");
+        sb.append("@").append(this.referenceType).append("{");
+        sb.append(this.id).append(",\n");
         for (BibtexReferenceField field : this.fields.keySet()) {
             sb.append("\t").append(field.getName()).append(" = {");
             sb.append(fields.get(field)).append("},\n");

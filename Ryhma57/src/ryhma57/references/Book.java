@@ -20,7 +20,7 @@ public class Book extends Reference {
     }
 
     public Book(String id, String author, String title, String year, String publisher) {
-        super(existingFields, requiredFields);
+        super(existingFields, requiredFields, "book");
         setID(id);
         setField(AUTHOR, author);
         setField(TITLE, title);

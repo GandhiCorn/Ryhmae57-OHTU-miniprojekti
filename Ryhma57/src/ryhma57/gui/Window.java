@@ -91,6 +91,8 @@ public class Window extends JFrame implements ActionListener {
 
         } else if(event.getActionCommand().equals(GENERATE)) {
             this.app.generateBibTex();
+            JOptionPane.showMessageDialog(this,
+                "BibTex file was generated.");
         }
     }
 }

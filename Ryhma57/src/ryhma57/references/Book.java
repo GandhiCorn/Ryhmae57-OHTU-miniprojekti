@@ -6,17 +6,15 @@ import static ryhma57.backend.BibtexReferenceField.*;
 
 public class Book extends Reference {
     private static EnumSet<BibtexReferenceField> existingFields;
-    private static EnumSet<BibtexReferenceField> requiredFields;
+    private static EnumSet<BibtexReferenceField> requiredFields, optionalFields;
 
     static {
-        EnumSet<BibtexReferenceField> optionals;
         Book.requiredFields = Reference.createFieldSet(AUTHOR,
                 TITLE, YEAR, PUBLISHER);
-        optionals = Reference.createFieldSet(VOLUME,
+        Book.optionalFields = Reference.createFieldSet(VOLUME,
                 NUMBER, SERIES, ADDRESS, EDITION, MONTH, NOTE);
-
         Book.existingFields = Reference.createExistingSet(
-                Book.requiredFields, optionals);
+                Book.requiredFields, Book.optionalFields);
     }
 
     public Book(String id, String author, String title, String year, String publisher) {
@@ -26,5 +24,8 @@ public class Book extends Reference {
         setField(TITLE, title);
         setField(YEAR, year);
         setField(PUBLISHER, publisher);
+    }
+    public Book() {
+        super(existingFields, requiredFields, "book");
     }
 }

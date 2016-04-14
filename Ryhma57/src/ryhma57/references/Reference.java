@@ -64,5 +64,14 @@ public abstract class Reference {
         fields.put(field, value);
     }
 
-    abstract public String toBibTex();
+    final public String toBibTex() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("@book{").append(this.id).append(",\n");
+        for (BibtexReferenceField field : this.fields.keySet()) {
+            sb.append("\t").append(field.getName()).append(" = {");
+            sb.append(fields.get(field)).append("},\n");
+        }
+        sb.append("}");
+        return sb.toString();
+    }
 }

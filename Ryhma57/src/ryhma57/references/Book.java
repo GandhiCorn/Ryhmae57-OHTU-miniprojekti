@@ -27,12 +27,4 @@ public class Book extends Reference {
         setField(YEAR, year);
         setField(PUBLISHER, publisher);
     }
-    
-    public String toBibTex() {
-        return "@book{" + getID() + ",\n" +
-                "author = {" + getField(AUTHOR) + "},\n" +
-                "title = {" + getField(TITLE) + "},\n" +
-                "year = {" + getField(YEAR) + "},\n" +
-                "publisher = {" + getField(PUBLISHER) + "},\n" + "}";
-    }
 }

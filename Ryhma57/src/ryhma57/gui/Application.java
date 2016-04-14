@@ -58,7 +58,7 @@ public class Application {
             boolean result;
             result = ref.setField(field, fields.get(field));
             if(!result) {
-                return "Invalid field " + field.getName();
+                return "Invalid or required field: " + field.getName();
             }
         }
         return null;

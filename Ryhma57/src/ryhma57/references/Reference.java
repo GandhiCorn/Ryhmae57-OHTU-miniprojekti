@@ -58,13 +58,14 @@ public abstract class Reference {
         return fields.get(field);
     }
 
-    public final void setField(BibtexReferenceField field, String value) {
+    public final boolean setField(BibtexReferenceField field, String value) {
         if(!existingFields.contains(field)) {
             //FIXME we should propably throw exception here.
             System.out.println("Invalid field");
-            return;
+            return false;
         }
         fields.put(field, value);
+        return true;
     }
 
     final public String toBibTex() {

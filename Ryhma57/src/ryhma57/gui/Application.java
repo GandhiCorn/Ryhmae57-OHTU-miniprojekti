@@ -55,7 +55,11 @@ public class Application {
         fields.remove(BibtexReferenceField.ID);
 
         for (BibtexReferenceField field : fields.keySet()) {
-            ref.setField(field, fields.get(field));
+            boolean result;
+            result = ref.setField(field, fields.get(field));
+            if(!result) {
+                return "Invalid field " + field.getName();
+            }
         }
         return null;
     }

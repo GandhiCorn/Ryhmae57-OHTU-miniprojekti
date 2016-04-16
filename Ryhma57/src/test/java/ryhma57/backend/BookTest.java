@@ -28,10 +28,9 @@ public class BookTest {
         assertEquals(kirja.getField(AUTHOR), "Janne Ahonen");
     }
 
-    @Test
+    @Test(expected=java.lang.NullPointerException.class)
     public void testSetNullField() {
         kirja.setField(PUBLISHER, null);
-        assertEquals(null, kirja.getField(PUBLISHER));
     }
 
     @Test

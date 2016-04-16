@@ -15,7 +15,7 @@ public class BookTest {
 
     public BookTest() {
         kirja = new Book();
-	kirja.setField(ID, "ID1");
+	kirja.setID("ID1");
 	kirja.setField(AUTHOR, "Matti Nykänen");
 	kirja.setField(TITLE, "Kotkan lento");
 	kirja.setField(YEAR, "2002");
@@ -30,13 +30,13 @@ public class BookTest {
 
     @Test
     public void testSetNullField() {
-        kirja.setField(ID, null);
-        assertEquals(kirja.getField(ID), null);
+        kirja.setField(PUBLISHER, null);
+        assertEquals(null, kirja.getField(PUBLISHER));
     }
 
     @Test
     public void testGetField() {
-        assertEquals(kirja.getField(ID), "ID1");
+        assertEquals("Otava", kirja.getField(PUBLISHER));
     }
 
     @Test

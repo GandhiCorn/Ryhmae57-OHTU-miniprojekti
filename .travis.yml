@@ -1,4 +1,4 @@
 language: java
 before_script: cd Ryhma57
-script: ant
+script: mvn test
 jdk: oraclejdk8

@@ -17,14 +17,6 @@ public class Book extends Reference {
                 Book.requiredFields, Book.optionalFields);
     }
 
-    public Book(String id, String author, String title, String year, String publisher) {
-        super(existingFields, requiredFields, "book");
-        setID(id);
-        setField(AUTHOR, author);
-        setField(TITLE, title);
-        setField(YEAR, year);
-        setField(PUBLISHER, publisher);
-    }
     public Book() {
         super(existingFields, requiredFields, "book");
     }

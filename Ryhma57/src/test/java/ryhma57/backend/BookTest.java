@@ -1,7 +1,7 @@
 package ryhma57.backend;
 
 import ryhma57.references.Book;
-import static ryhma57.backend.BibtexReferenceField;
+import static ryhma57.backend.BibtexReferenceField.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,20 +24,19 @@ public class BookTest {
 
     @Test
     public void testSetField() {
-        kirja.setField(BibtexReferenceField.AUTHOR, "Janne Ahonen");
+        kirja.setField(AUTHOR, "Janne Ahonen");
         assertEquals(kirja.getField(AUTHOR), "Janne Ahonen");
     }
 
     @Test
     public void testSetNullField() {
-        kirja.setField(BibtexReferenceField.ID, null);
-        assertEquals(kirja.getField(BibtexReferenceField.ID), null);
+        kirja.setField(ID, null);
+        assertEquals(kirja.getField(ID), null);
     }
 
     @Test
     public void testGetField() {
-        kirja.getField(BibtexReferenceField.ID);
-        assertEquals(kirja.getField(BibtexReferenceField.ID), "ID1");
+        assertEquals(kirja.getField(ID), "ID1");
     }
 
     @Test

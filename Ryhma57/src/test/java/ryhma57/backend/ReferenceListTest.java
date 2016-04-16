@@ -20,9 +20,26 @@ public class ReferenceListTest {
     private Reference r3;
     
     public ReferenceListTest() {
-        r1 = new Book("ID1", "Author1", "Title1", "Year1", "Publisher1");
-        r2 = new Book("ID2", "Author2", "Title2", "Year2", "Publisher2");
-        r3 = new Book("ID3", "Author3", "Title3", "Year3", "Publisher3");
+        r1 = new Book();
+        r1.setField(ID, "ID1");
+        r1.setField(AUTHOR, "Author1");
+        r1.setField(TITLE, "Title1");
+        r1.setField(YEAR, "Year1");
+        r1.setField(PUBLISHER, "Publisher1");
+
+        r2 = new Book();
+        r2.setField(ID, "ID2");
+        r2.setField(AUTHOR, "Author2");
+        r2.setField(TITLE, "Title2");
+        r2.setField(YEAR, "Year2");
+        r2.setField(PUBLISHER, "Publisher2");
+
+        r3 = new Book();
+        r3.setField(ID, "ID3");
+        r3.setField(AUTHOR, "Author3");
+        r3.setField(TITLE, "Title3");
+        r3.setField(YEAR, "Year3");
+        r3.setField(PUBLISHER, "Publisher3");
     }
     
     @BeforeClass
@@ -79,9 +96,4 @@ public class ReferenceListTest {
         list.addReference(r1);
         assertEquals(list.size(), 1);
     }
-    
-//    @Test
-//    public void testGetBooks() {
-//        
-//    }
 }

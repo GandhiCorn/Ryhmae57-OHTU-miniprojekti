@@ -11,26 +11,13 @@ import java.util.logging.Logger;
 import ryhma57.references.Reference;
 
 public class Storage {
-    private Gson gson;
-    private FileWriter json;
+    private final Gson gson;
     private PrintWriter jsonWriter;
-    private FileWriter bib;
     private PrintWriter bibWriter;
     private ReferenceList referenceList;
     
     public Storage() {
         gson = new Gson();
-        try {
-            json = new FileWriter("database.json");
-        } catch (IOException ex) {
-            Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            bib = new FileWriter("database.bib");
-        } catch (IOException ex) {
-            Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-//        referenceList = gson.fromJson(json.toString(), ReferenceList.class);
         referenceList = new ReferenceList();
     }
 
@@ -53,5 +40,9 @@ public class Storage {
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void getPreviousReferenceList() {
+        
     }
 }

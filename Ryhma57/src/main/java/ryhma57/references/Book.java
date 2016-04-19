@@ -1,10 +1,11 @@
 package ryhma57.references;
 
+import java.io.Serializable;
 import java.util.EnumSet;
 import ryhma57.backend.BibtexReferenceField;
 import static ryhma57.backend.BibtexReferenceField.*;
 
-public class Book extends Reference {
+public class Book extends Reference implements Serializable {
     private static EnumSet<BibtexReferenceField> existingFields;
     private static EnumSet<BibtexReferenceField> requiredFields, optionalFields;
 

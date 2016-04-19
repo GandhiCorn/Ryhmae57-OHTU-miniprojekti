@@ -1,10 +1,23 @@
 package ryhma57.references;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import ryhma57.backend.BibtexReferenceField;
+import static ryhma57.backend.BibtexReferenceField.ADDRESS;
+import static ryhma57.backend.BibtexReferenceField.AUTHOR;
+import static ryhma57.backend.BibtexReferenceField.EDITION;
+import static ryhma57.backend.BibtexReferenceField.EDITOR;
+import static ryhma57.backend.BibtexReferenceField.MONTH;
+import static ryhma57.backend.BibtexReferenceField.NOTE;
+import static ryhma57.backend.BibtexReferenceField.NUMBER;
+import static ryhma57.backend.BibtexReferenceField.PUBLISHER;
+import static ryhma57.backend.BibtexReferenceField.SERIES;
+import static ryhma57.backend.BibtexReferenceField.TITLE;
+import static ryhma57.backend.BibtexReferenceField.VOLUME;
+import static ryhma57.backend.BibtexReferenceField.YEAR;
 
-public abstract class Reference {
+public abstract class Reference implements Serializable {
     protected final EnumSet<BibtexReferenceField> existingFields;
     protected final EnumSet<BibtexReferenceField> requiredFields;
     private final String referenceType;

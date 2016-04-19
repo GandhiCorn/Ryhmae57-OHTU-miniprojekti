@@ -1,10 +1,11 @@
 package ryhma57.backend;
 
+import java.io.Serializable;
 import ryhma57.references.Reference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReferenceList {
+public class ReferenceList implements Serializable {
     
     private List<Reference> list;
     

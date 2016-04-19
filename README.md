@@ -1,7 +1,7 @@
 # Ryhmae57-OHTU-miniprojekti
 [![Build Status](https://travis-ci.org/GandhiCorn/Ryhmae57-OHTU-miniprojekti.svg?branch=master)](https://travis-ci.org/GandhiCorn/Ryhmae57-OHTU-miniprojekti)
 
-Tämä on ohjelmisto tuotannon projekti.
+Tämä on ohjelmistotuotannon projekti.
 
 ##Linkit
 

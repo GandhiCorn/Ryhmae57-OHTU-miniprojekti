@@ -18,6 +18,7 @@ public class Application {
     public Application() {
         this.referenceList = new ReferenceList();
         this.storage = new Storage();
+        storage.getPreviousReferenceList();
     }
     
     public static void main(String[] args) {

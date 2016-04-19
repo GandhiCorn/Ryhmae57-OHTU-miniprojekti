@@ -1,4 +1,5 @@
 package ryhma57.gui;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -7,20 +8,25 @@ import javax.swing.*;
 import ryhma57.backend.BibtexReferenceField;
 
 public class Window extends JFrame implements ActionListener {
+
     static final String CREATE = "create";
     static final String GENERATE = "generate";
     static final String CLEAR_LABEL = "clearLabel";
+    static final String DROPDOWN = "dropdown";
+    
     private Application app;
     private JLabel infoLabel;
 
     /* this is bit ugly */
     private EnumMap<BibtexReferenceField, JFormattedTextField> fields;
+    
+    private String[] referenceTypes = {"Book", "Inproceedings", "Article"};
 
     public Window(Application app) {
         this.app = app;
         this.setTitle("Application");
         /* set some default size so that window isn't 0x0 size */
-        /*XXX we could load window geometry from config file */
+ /*XXX we could load window geometry from config file */
         this.setSize(600, 480);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -41,10 +47,10 @@ public class Window extends JFrame implements ActionListener {
     private void createDialog() {
         JFormattedTextField input;
         JPanel mainPane = new JPanel(new BorderLayout());
-        JPanel labelPane = new JPanel(new GridLayout(0,1));
-        JPanel inputPane = new JPanel(new GridLayout(0,1));
+        JPanel labelPane = new JPanel(new GridLayout(0, 1));
+        JPanel inputPane = new JPanel(new GridLayout(0, 1));
 
-        mainPane.setBorder(BorderFactory.createTitledBorder("Create book reference"));
+        mainPane.setBorder(BorderFactory.createTitledBorder("Create a reference"));
 
         generateField(labelPane, inputPane, BibtexReferenceField.ID);
         generateField(labelPane, inputPane, BibtexReferenceField.AUTHOR);
@@ -60,7 +66,6 @@ public class Window extends JFrame implements ActionListener {
         generateField(labelPane, inputPane, BibtexReferenceField.EDITION);
         generateField(labelPane, inputPane, BibtexReferenceField.MONTH);
         generateField(labelPane, inputPane, BibtexReferenceField.NOTE);
-
 
         mainPane.add(labelPane, BorderLayout.CENTER);
         mainPane.add(inputPane, BorderLayout.LINE_END);
@@ -79,24 +84,29 @@ public class Window extends JFrame implements ActionListener {
         this.infoLabel = new JLabel("");
         this.add(this.infoLabel, BorderLayout.CENTER);
 
-        this.add(button, BorderLayout.SOUTH);
+        this.add(button, BorderLayout.SOUTH);        
+        
+        JComboBox referenceList = new JComboBox(referenceTypes);
+        referenceList.addActionListener(this);
+        referenceList.setActionCommand(DROPDOWN);
+        mainPane.add(referenceList, BorderLayout.NORTH);
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getActionCommand().equals(CREATE)) {
+        if (event.getActionCommand().equals(CREATE)) {
             EnumMap<BibtexReferenceField, String> set;
             String error;
             Timer timer;
             set = new EnumMap<>(BibtexReferenceField.class);
 
-            for(BibtexReferenceField field : this.fields.keySet()) {
+            for (BibtexReferenceField field : this.fields.keySet()) {
                 JFormattedTextField input;
                 input = this.fields.get(field);
                 set.put(field, input.getText());
             }
             error = this.app.createNewBookReference(set);
-            if(error != null) {
+            if (error != null) {
                 this.infoLabel.setText(error);
                 return;
             }
@@ -106,12 +116,17 @@ public class Window extends JFrame implements ActionListener {
             timer.start();
             timer.setActionCommand(CLEAR_LABEL);
 
-        } else if(event.getActionCommand().equals(GENERATE)) {
+        } else if (event.getActionCommand().equals(GENERATE)) {
             this.app.generateBibTex();
             JOptionPane.showMessageDialog(this,
-                "BibTex file was generated.");
-        } else if(event.getActionCommand().equals(CLEAR_LABEL)) {
+                    "BibTex file was generated.");
+        } else if (event.getActionCommand().equals(CLEAR_LABEL)) {
             this.infoLabel.setText("");
+            
+        // Tässä pystyy käsittelemään drodownin actionia esim vaihtamaan talletustyypin eri referenssien välillä
+        } else if (event.getActionCommand().equals(DROPDOWN)) {
+            
         }
+        
     }
 }

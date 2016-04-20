@@ -11,30 +11,33 @@ import ryhma57.backend.Storage;
  * This is the main class currently.
  */
 public class Application {
-    
+
     private ReferenceList referenceList;
     private Storage storage;
-    
+    private Window window;
+
     public Application() {
         this.referenceList = new ReferenceList();
         this.storage = new Storage();
-        storage.getPreviousReferenceList();
+        this.storage.getPreviousReferenceList();
     }
-    
+
     public static void main(String[] args) {
         Application app = new Application();
-        Window window;
-        window = new Window(app);
+        Window window = new Window(app);
+        app.run(window);
+    }
 
+    public void run(Window window) {
+        this.window = window;
         window.setVisible(true);
-        System.out.println("test");
     }
 
     public void generateBibTex() {
         storage.generateBibTex();
     }
 
-    public String createNewBookReference(EnumMap<BibtexReferenceField, String> fields) {
+    public void createNewBookReference(EnumMap<BibtexReferenceField, String> fields) {
         System.out.println("Create the book reference in the backend");
 
         Reference ref = new Book();
@@ -46,11 +49,10 @@ public class Application {
             boolean result;
             result = ref.setField(field, fields.get(field));
             if(!result) {
-                return "Invalid or required field: " + field.getName();
+                window.setErrorMessage("Invalid or required field: " + field.getName());
+                return;
             }
         }       
         storage.storeNewReference(ref);
-        
-        return null;
     }
 }

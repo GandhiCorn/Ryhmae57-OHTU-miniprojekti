@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.EnumMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,7 +16,10 @@ import ryhma57.backend.BibtexReferenceField;
 public class FieldsForm extends JPanel implements ActionListener {
     private EnumMap<BibtexReferenceField, JFormattedTextField> fields;
     private static String SAVE = "save";
+    static final String DROPDOWN = "dropdown";
     private Application app;
+
+    private String[] referenceTypes = {"Book", "Inproceedings", "Article"};
 
     public FieldsForm(Application app) {
         super(new BorderLayout());
@@ -37,6 +41,11 @@ public class FieldsForm extends JPanel implements ActionListener {
     final public void createComponents() {
         JPanel labelPane = new JPanel(new GridLayout(0, 1));
         JPanel inputPane = new JPanel(new GridLayout(0, 1));
+
+        JComboBox referenceList = new JComboBox(referenceTypes);
+        referenceList.addActionListener(this);
+        referenceList.setActionCommand(DROPDOWN);
+        this.add(referenceList, BorderLayout.NORTH);
 
         this.setBorder(BorderFactory.createTitledBorder("Create a reference"));
 
@@ -78,6 +87,8 @@ public class FieldsForm extends JPanel implements ActionListener {
             }
 
             this.app.createNewBookReference(set);
+        // Tässä pystyy käsittelemään drodownin actionia esim vaihtamaan talletustyypin eri referenssien välillä
+        } else if (event.getActionCommand().equals(DROPDOWN)) {
         }
     }
 }

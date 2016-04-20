@@ -9,15 +9,11 @@ import ryhma57.backend.BibtexReferenceField;
 
 public class Window extends JFrame implements ActionListener {
 
-    static final String CREATE = "create";
     static final String GENERATE = "generate";
     static final String CLEAR_LABEL = "clearLabel";
-    static final String DROPDOWN = "dropdown";
     
     private Application app;
     private JLabel infoLabel;
-    
-    private String[] referenceTypes = {"Book", "Inproceedings", "Article"};
 
     public Window(Application app) {
         this.app = app;
@@ -32,22 +28,22 @@ public class Window extends JFrame implements ActionListener {
 
     private void createComponents() {
         JButton button;
-        JPanel mainPane = new FieldsForm(this.app);
-        this.add(mainPane, BorderLayout.NORTH);
+        JPanel pane;
+        pane = new FieldsForm(this.app);
+        this.add(pane, BorderLayout.NORTH);
+
+        pane = new ListView(this.app);
+        this.add(pane, BorderLayout.CENTER);
+
+        this.infoLabel = new JLabel("");
+        this.add(this.infoLabel, BorderLayout.SOUTH);
 
         button = new JButton("Generate BibTeX file");
         button.addActionListener(this);
         button.setActionCommand(GENERATE);
 
-        this.infoLabel = new JLabel("");
-        this.add(this.infoLabel, BorderLayout.CENTER);
-
-        this.add(button, BorderLayout.SOUTH);
+        this.add(button, BorderLayout.WEST);
         
-        JComboBox referenceList = new JComboBox(referenceTypes);
-        referenceList.addActionListener(this);
-        referenceList.setActionCommand(DROPDOWN);
-        mainPane.add(referenceList, BorderLayout.NORTH);
     }
 
     public void setErrorMessage(String error) {
@@ -67,10 +63,6 @@ public class Window extends JFrame implements ActionListener {
                     "BibTex file was generated.");
         } else if (event.getActionCommand().equals(CLEAR_LABEL)) {
             this.infoLabel.setText("");
-            
-        // Tässä pystyy käsittelemään drodownin actionia esim vaihtamaan talletustyypin eri referenssien välillä
-        } else if (event.getActionCommand().equals(DROPDOWN)) {
-            
         }
         
     }

@@ -24,9 +24,6 @@ public class Storage {
     
     public void storeNewReference(Reference reference) {
         try {
-            writer = new PrintWriter("db.txt");
-            writer.print("");
-            writer.close();
             out = new ObjectOutputStream(new FileOutputStream ("db.txt"));
             list.addReference(reference);
             out.writeObject(list);
@@ -50,6 +47,8 @@ public class Storage {
         try {
             in = new ObjectInputStream(new FileInputStream("db.txt"));
             list = (ReferenceList) in.readObject();
+        } catch (FileNotFoundException ex) {
+            /* Do nothing if the file doesn't exist */
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -58,7 +58,5 @@ public class Application {
         }
         storage.storeNewReference(ref);
         window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
-        
-        return storage.storeNewReference(ref);
     }
 }

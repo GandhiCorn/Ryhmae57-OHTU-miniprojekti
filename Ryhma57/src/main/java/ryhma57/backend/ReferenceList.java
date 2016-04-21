@@ -3,14 +3,17 @@ package ryhma57.backend;
 import java.io.Serializable;
 import ryhma57.references.Reference;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ReferenceList implements Serializable {
     
     private List<Reference> list;
+    private HashSet<String> ids;
     
     public ReferenceList() {
         this.list = new ArrayList<>();
+        this.ids = new HashSet<>();
     }
     
     public int size() {
@@ -20,6 +23,7 @@ public class ReferenceList implements Serializable {
     public void addReference(Reference r) {
         if(r != null) {
             list.add(r);
+            ids.add(r.getField(BibtexReferenceField.ID));
         }
     }
     
@@ -37,6 +41,10 @@ public class ReferenceList implements Serializable {
             sb.append(r.toBibTex()).append("\n");
         }
         return sb.toString();
+    }
+    
+    public boolean checkId(Reference reference) {
+        return this.ids.contains(reference.getField(BibtexReferenceField.ID));
     }
     
     /* Metodi pelkkien kirjaolioiden saamiseksi

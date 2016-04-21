@@ -70,20 +70,18 @@ public abstract class Reference implements Serializable {
     public final String getField(BibtexReferenceField field) {
         return fields.get(field);
     }
+    
+    public final EnumSet<BibtexReferenceField> getRequiredFields() {
+        return this.requiredFields;
+    }
 
     /*FIXME inform about the problems with exceptions */
-    public final boolean setField(BibtexReferenceField field, String value) {
+    public final void setField(BibtexReferenceField field, String value) {
         if(!existingFields.contains(field)) {
             //FIXME we should propably throw exception here.
             System.out.println("Invalid field");
-            return false;
-        }
-        if(requiredFields.contains(field) && value.length() == 0) {
-            //FIXME we should propably throw exception here also.
-            return false;
         }
         fields.put(field, value);
-        return true;
     }
 
     final public String toBibTex() {

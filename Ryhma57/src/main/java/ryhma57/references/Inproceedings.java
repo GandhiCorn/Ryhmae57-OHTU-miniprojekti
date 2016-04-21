@@ -14,7 +14,7 @@ public class Inproceedings extends Reference {
     private static EnumSet<BibtexReferenceField> requiredFields, optionalFields;
 
     static {
-        Inproceedings.requiredFields = Reference.createFieldSet(AUTHOR,
+        Inproceedings.requiredFields = Reference.createFieldSet(ID, AUTHOR,
                 TITLE, BOOKTITLE, YEAR);
         Inproceedings.optionalFields = Reference.createFieldSet(EDITOR, 
                 VOLUME, SERIES, PAGES, ADDRESS, MONTH, ORGANIZATION,

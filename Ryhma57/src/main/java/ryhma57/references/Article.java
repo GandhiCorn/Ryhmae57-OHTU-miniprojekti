@@ -9,7 +9,7 @@ public class Article extends Reference {
     private static EnumSet<BibtexReferenceField> requiredFields, optionalFields;
 
     static {
-        Article.requiredFields = Reference.createFieldSet(AUTHOR,
+        Article.requiredFields = Reference.createFieldSet(ID, AUTHOR,
                 TITLE, JOURNAL, YEAR);
         Article.optionalFields = Reference.createFieldSet(VOLUME,
                 SERIES, ADDRESS, EDITION, MONTH, NOTE);

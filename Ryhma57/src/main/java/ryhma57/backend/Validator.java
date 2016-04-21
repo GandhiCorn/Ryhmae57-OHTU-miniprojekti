@@ -17,7 +17,7 @@ public class Validator {
         if (checkFields(reference) != null) {
             return "Invalid or required field: " + checkFields(reference).getName();
         }
-        if (list.checkId(reference)) {
+        if (list.checkDuplicateId(reference)) {
             return "Duplicate ID";
         }
         return null;

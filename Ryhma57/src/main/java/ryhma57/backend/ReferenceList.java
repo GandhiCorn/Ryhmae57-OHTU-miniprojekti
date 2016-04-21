@@ -43,7 +43,7 @@ public class ReferenceList implements Serializable {
         return sb.toString();
     }
     
-    public boolean checkId(Reference reference) {
+    public boolean checkDuplicateId(Reference reference) {
         return this.ids.contains(reference.getField(BibtexReferenceField.ID));
     }
     

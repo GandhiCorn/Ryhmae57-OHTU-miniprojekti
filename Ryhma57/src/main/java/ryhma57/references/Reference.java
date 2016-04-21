@@ -4,25 +4,12 @@ import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import ryhma57.backend.BibtexReferenceField;
-import static ryhma57.backend.BibtexReferenceField.ADDRESS;
-import static ryhma57.backend.BibtexReferenceField.AUTHOR;
-import static ryhma57.backend.BibtexReferenceField.EDITION;
-import static ryhma57.backend.BibtexReferenceField.EDITOR;
-import static ryhma57.backend.BibtexReferenceField.MONTH;
-import static ryhma57.backend.BibtexReferenceField.NOTE;
-import static ryhma57.backend.BibtexReferenceField.NUMBER;
-import static ryhma57.backend.BibtexReferenceField.PUBLISHER;
-import static ryhma57.backend.BibtexReferenceField.SERIES;
-import static ryhma57.backend.BibtexReferenceField.TITLE;
-import static ryhma57.backend.BibtexReferenceField.VOLUME;
-import static ryhma57.backend.BibtexReferenceField.YEAR;
 
 public abstract class Reference implements Serializable {
     protected final EnumSet<BibtexReferenceField> existingFields;
     protected final EnumSet<BibtexReferenceField> requiredFields;
     private final String referenceType;
     private EnumMap<BibtexReferenceField, String> fields;
-    private String id;
 
     /**
      * Helper function for creating the field sets.
@@ -60,11 +47,7 @@ public abstract class Reference implements Serializable {
     }
 
     public final String getID() {
-        return this.id;
-    }
-
-    public final void setID(String id) {
-        this.id = id;
+        return this.fields.get(BibtexReferenceField.ID);
     }
 
     public final String getField(BibtexReferenceField field) {
@@ -87,8 +70,11 @@ public abstract class Reference implements Serializable {
     final public String toBibTex() {
         StringBuilder sb = new StringBuilder();
         sb.append("@").append(this.referenceType).append("{");
-        sb.append(this.id).append(",\n");
+        sb.append(getID()).append(",\n");
         for (BibtexReferenceField field : this.fields.keySet()) {
+            if (field == BibtexReferenceField.ID) {
+                continue;
+            }
             sb.append("\t").append(field.getName()).append(" = {");
             sb.append(fields.get(field)).append("},\n");
         }

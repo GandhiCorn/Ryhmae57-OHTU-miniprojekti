@@ -20,7 +20,6 @@ public class Application {
     public Application() {
         this.referenceList = new ReferenceList();
         this.storage = new Storage();
-        this.storage.getPreviousReferenceList();
     }
 
     public static void main(String[] args) {
@@ -48,18 +47,18 @@ public class Application {
 
         Reference ref = new Book();
 
-        ref.setID(fields.get(BibtexReferenceField.ID));
-        fields.remove(BibtexReferenceField.ID);
-
         for (BibtexReferenceField field : fields.keySet()) {
-            boolean result;
-            result = ref.setField(field, fields.get(field));
-            if(!result) {
-                window.setErrorMessage("Invalid or required field: " + field.getName());
-                return;
-            }
+            //boolean result;
+            //result = ref.setField(field, fields.get(field));
+            //if(!result) {
+            //    window.setErrorMessage("Invalid or required field: " + field.getName());
+            //    return;
+            //}
+            ref.setField(field, fields.get(field));
         }
         storage.storeNewReference(ref);
         window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
+        
+        return storage.storeNewReference(ref);
     }
 }

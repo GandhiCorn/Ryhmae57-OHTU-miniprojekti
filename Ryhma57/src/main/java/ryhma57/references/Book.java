@@ -10,7 +10,7 @@ public class Book extends Reference implements Serializable {
     private static EnumSet<BibtexReferenceField> requiredFields, optionalFields;
 
     static {
-        Book.requiredFields = Reference.createFieldSet(AUTHOR,
+        Book.requiredFields = Reference.createFieldSet(ID, AUTHOR,
                 EDITOR, TITLE, YEAR, PUBLISHER);
         Book.optionalFields = Reference.createFieldSet(VOLUME,
                 NUMBER, SERIES, ADDRESS, EDITION, MONTH, NOTE);

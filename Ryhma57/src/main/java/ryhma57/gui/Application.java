@@ -1,6 +1,7 @@
 package ryhma57.gui;
 
 import java.util.EnumMap;
+import java.util.List;
 import ryhma57.backend.BibtexReferenceField;
 import ryhma57.references.Book;
 import ryhma57.references.Reference;
@@ -30,6 +31,11 @@ public class Application {
 
     public void run(Window window) {
         this.window = window;
+        /* this is currently for testing */
+        List<Reference> list = storage.getReferenceList().getAll();
+        for (Reference ref : list) {
+            window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
+        }
         window.setVisible(true);
     }
 
@@ -52,7 +58,7 @@ public class Application {
                 window.setErrorMessage("Invalid or required field: " + field.getName());
                 return;
             }
-        }       
+        }
         storage.storeNewReference(ref);
         window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
     }

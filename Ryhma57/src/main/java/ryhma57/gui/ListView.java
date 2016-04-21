@@ -23,7 +23,6 @@ public class ListView extends JPanel {
     private int length;
 
     public void createRow(String id, String name) {
-        JPanel row;
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
@@ -47,10 +46,10 @@ public class ListView extends JPanel {
     }
 
     public ListView(Application app) {
-        JPanel row;
-
         this.app = app;
         this.length = 0;
         this.setLayout(new GridBagLayout());
+
+        createRow("test2010", "This is test reference");
     }
 }

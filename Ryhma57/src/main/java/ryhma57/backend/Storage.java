@@ -43,7 +43,7 @@ public class Storage {
         }
     }
     
-    public void getPreviousReferenceList()  {
+    public void getPreviousReferenceList() {
         try {
             in = new ObjectInputStream(new FileInputStream("db.txt"));
             list = (ReferenceList) in.readObject();
@@ -53,5 +53,9 @@ public class Storage {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    /*TODO This propably should be refactored */
+    public ReferenceList getReferenceList() {
+        return list;
+    }
 }

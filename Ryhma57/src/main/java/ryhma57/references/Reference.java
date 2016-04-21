@@ -4,25 +4,12 @@ import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import ryhma57.backend.BibtexReferenceField;
-import static ryhma57.backend.BibtexReferenceField.ADDRESS;
-import static ryhma57.backend.BibtexReferenceField.AUTHOR;
-import static ryhma57.backend.BibtexReferenceField.EDITION;
-import static ryhma57.backend.BibtexReferenceField.EDITOR;
-import static ryhma57.backend.BibtexReferenceField.MONTH;
-import static ryhma57.backend.BibtexReferenceField.NOTE;
-import static ryhma57.backend.BibtexReferenceField.NUMBER;
-import static ryhma57.backend.BibtexReferenceField.PUBLISHER;
-import static ryhma57.backend.BibtexReferenceField.SERIES;
-import static ryhma57.backend.BibtexReferenceField.TITLE;
-import static ryhma57.backend.BibtexReferenceField.VOLUME;
-import static ryhma57.backend.BibtexReferenceField.YEAR;
 
 public abstract class Reference implements Serializable {
     protected final EnumSet<BibtexReferenceField> existingFields;
     protected final EnumSet<BibtexReferenceField> requiredFields;
     private final String referenceType;
     private EnumMap<BibtexReferenceField, String> fields;
-    private String id;
 
     /**
      * Helper function for creating the field sets.
@@ -60,37 +47,34 @@ public abstract class Reference implements Serializable {
     }
 
     public final String getID() {
-        return this.id;
-    }
-
-    public final void setID(String id) {
-        this.id = id;
+        return this.fields.get(BibtexReferenceField.ID);
     }
 
     public final String getField(BibtexReferenceField field) {
         return fields.get(field);
     }
+    
+    public final EnumSet<BibtexReferenceField> getRequiredFields() {
+        return this.requiredFields;
+    }
 
     /*FIXME inform about the problems with exceptions */
-    public final boolean setField(BibtexReferenceField field, String value) {
+    public final void setField(BibtexReferenceField field, String value) {
         if(!existingFields.contains(field)) {
             //FIXME we should propably throw exception here.
             System.out.println("Invalid field");
-            return false;
-        }
-        if(requiredFields.contains(field) && value.length() == 0) {
-            //FIXME we should propably throw exception here also.
-            return false;
         }
         fields.put(field, value);
-        return true;
     }
 
     final public String toBibTex() {
         StringBuilder sb = new StringBuilder();
         sb.append("@").append(this.referenceType).append("{");
-        sb.append(this.id).append(",\n");
+        sb.append(getID()).append(",\n");
         for (BibtexReferenceField field : this.fields.keySet()) {
+            if (field == BibtexReferenceField.ID) {
+                continue;
+            }
             sb.append("\t").append(field.getName()).append(" = {");
             sb.append(fields.get(field)).append("},\n");
         }

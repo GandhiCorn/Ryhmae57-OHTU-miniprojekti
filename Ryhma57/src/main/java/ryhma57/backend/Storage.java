@@ -17,21 +17,18 @@ public class Storage {
     private ObjectInputStream in;
     private PrintWriter writer;
     private ReferenceList list;
+    private Validator validator;
     
     public Storage() {
         list = new ReferenceList();
+        getPreviousReferenceList();
+        validator = new Validator();
     }
     
-    public void getPreviousReferenceList()  {
-        try {
-            in = new ObjectInputStream(new FileInputStream("db.txt"));
-            list = (ReferenceList) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
+    public String storeNewReference(Reference reference) {
+        if (validator.validateReference(reference) != null) {
+            return validator.validateReference(reference);
         }
-    }
-    
-    public void storeNewReference(Reference reference) {
         try {
             writer = new PrintWriter("db.txt");
             writer.print("");
@@ -43,6 +40,7 @@ public class Storage {
         } catch (IOException ex) {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "Reference saved successfully";
     }
     
     public void removeReference(Reference reference) {
@@ -61,11 +59,21 @@ public class Storage {
     
     public void generateBibTex() {
         try {
-            writer = new PrintWriter("database.bib", "UTF-8");
+            writer = new PrintWriter("references.bib", "UTF-8");
             writer.print(list.toBibTex());
             writer.close();
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
             Logger.getLogger(StorageJson.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void getPreviousReferenceList()  {
+        try {
+            in = new ObjectInputStream(new FileInputStream("db.txt"));
+            list = (ReferenceList) in.readObject();
+            validator.setReferenceList(list);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

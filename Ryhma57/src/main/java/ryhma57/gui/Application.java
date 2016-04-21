@@ -18,7 +18,6 @@ public class Application {
     public Application() {
         this.referenceList = new ReferenceList();
         this.storage = new Storage();
-        storage.getPreviousReferenceList();
     }
     
     public static void main(String[] args) {
@@ -39,18 +38,10 @@ public class Application {
 
         Reference ref = new Book();
 
-        ref.setID(fields.get(BibtexReferenceField.ID));
-        fields.remove(BibtexReferenceField.ID);
-
         for (BibtexReferenceField field : fields.keySet()) {
-            boolean result;
-            result = ref.setField(field, fields.get(field));
-            if(!result) {
-                return "Invalid or required field: " + field.getName();
-            }
-        }       
-        storage.storeNewReference(ref);
+            ref.setField(field, fields.get(field));
+        }
         
-        return null;
+        return storage.storeNewReference(ref);
     }
 }

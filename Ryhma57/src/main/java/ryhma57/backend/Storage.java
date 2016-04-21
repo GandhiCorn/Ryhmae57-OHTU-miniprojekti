@@ -22,6 +22,15 @@ public class Storage {
         list = new ReferenceList();
     }
     
+    public void getPreviousReferenceList()  {
+        try {
+            in = new ObjectInputStream(new FileInputStream("db.txt"));
+            list = (ReferenceList) in.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void storeNewReference(Reference reference) {
         try {
             writer = new PrintWriter("db.txt");
@@ -36,6 +45,20 @@ public class Storage {
         }
     }
     
+    public void removeReference(Reference reference) {
+        try {
+            writer = new PrintWriter("db.txt");
+            writer.print("");
+            writer.close();
+            list.deleteReference(reference);
+            out = new ObjectOutputStream(new FileOutputStream ("db.txt"));
+            out.writeObject(list);
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void generateBibTex() {
         try {
             writer = new PrintWriter("database.bib", "UTF-8");
@@ -43,15 +66,6 @@ public class Storage {
             writer.close();
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
             Logger.getLogger(StorageJson.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void getPreviousReferenceList()  {
-        try {
-            in = new ObjectInputStream(new FileInputStream("db.txt"));
-            list = (ReferenceList) in.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

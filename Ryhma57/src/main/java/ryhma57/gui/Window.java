@@ -28,12 +28,17 @@ public class Window extends JFrame implements ActionListener {
 
     private void createComponents() {
         JButton button;
-        JPanel pane;
+        JScrollPane scrollPane;
+        JPanel pane, aligner;
         pane = new FieldsForm(this.app);
         this.add(pane, BorderLayout.NORTH);
 
         pane = new ListView(this.app);
-        this.add(pane, BorderLayout.CENTER);
+        aligner = new JPanel();
+        aligner.setLayout(new BorderLayout());
+        aligner.add(pane, BorderLayout.PAGE_START);
+        scrollPane = new JScrollPane(aligner);
+        this.add(scrollPane, BorderLayout.CENTER);
 
         this.infoLabel = new JLabel("");
         this.add(this.infoLabel, BorderLayout.SOUTH);

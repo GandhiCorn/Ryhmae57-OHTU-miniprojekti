@@ -14,6 +14,7 @@ public class Window extends JFrame implements ActionListener {
     
     private Application app;
     private JLabel infoLabel;
+    private ListView listView;
 
     public Window(Application app) {
         this.app = app;
@@ -33,10 +34,10 @@ public class Window extends JFrame implements ActionListener {
         pane = new FieldsForm(this.app);
         this.add(pane, BorderLayout.NORTH);
 
-        pane = new ListView(this.app);
+        this.listView = new ListView(this.app);
         aligner = new JPanel();
         aligner.setLayout(new BorderLayout());
-        aligner.add(pane, BorderLayout.PAGE_START);
+        aligner.add(this.listView, BorderLayout.PAGE_START);
         scrollPane = new JScrollPane(aligner);
         this.add(scrollPane, BorderLayout.CENTER);
 
@@ -48,7 +49,10 @@ public class Window extends JFrame implements ActionListener {
         button.setActionCommand(GENERATE);
 
         this.add(button, BorderLayout.WEST);
-        
+    }
+
+    public ListView getListView() {
+        return this.listView;
     }
 
     public void setErrorMessage(String error) {

@@ -43,25 +43,14 @@ public class ListView extends JPanel {
         c.gridwidth = 3;
         c.weightx = 1.0;
         this.add(nameLabel, c);
+        this.revalidate();
     }
+
     public ListView(Application app) {
         JPanel row;
 
         this.app = app;
         this.length = 0;
         this.setLayout(new GridBagLayout());
-
-        createRow("awsfhs2011", "Hello this is test");
-        createRow("jgeegs2016", "Hi this is cool");
-        createRow("quulka2000", "Really awesome study");
-        createRow("awsfhs2011", "Hello this is test");
-        createRow("jgeegs2016", "Hi this is cool");
-        createRow("quulka2000", "Really awesome study");
-        createRow("awsfhs2011", "Hello this is test");
-        createRow("jgeegs2016", "Hi this is cool");
-        createRow("quulka2000", "Really awesome study");
-        createRow("awsfhs2011", "Hello this is test");
-        createRow("jgeegs2016", "Hi this is cool");
-        createRow("quulka2000", "Really awesome study");
     }
 }

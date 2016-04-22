@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class ReferenceList implements Serializable {
+    private static final long serialVersionUID = 2504774830084138204l;
     
     private List<Reference> list;
     private HashSet<String> ids;

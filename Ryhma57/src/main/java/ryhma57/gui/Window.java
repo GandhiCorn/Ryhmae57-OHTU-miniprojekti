@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 import java.util.EnumMap;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import ryhma57.backend.BibtexReferenceField;
 
 public class Window extends JFrame implements ActionListener {
@@ -40,8 +42,13 @@ public class Window extends JFrame implements ActionListener {
         button.setActionCommand(GENERATE);
         header.add(new JLabel("[Search bar]"), BorderLayout.CENTER);
         header.add(button, BorderLayout.LINE_END);
-        header.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         this.add(header, BorderLayout.NORTH);
+
+        /* add border and padding to the header panel */
+        Border bottomBorder = BorderFactory.createMatteBorder(0, 0, 1, 0,
+                Color.BLACK);
+        header.setBorder(BorderFactory.createCompoundBorder(bottomBorder,
+                new EmptyBorder(4, 4, 4, 4)));
 
         pane = new FieldsForm(this.app);
         this.add(pane, BorderLayout.EAST);

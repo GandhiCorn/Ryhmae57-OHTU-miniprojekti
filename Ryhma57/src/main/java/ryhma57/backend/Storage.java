@@ -26,8 +26,9 @@ public class Storage {
     }
 
     public String storeNewReference(Reference reference) {
-        if (validator.validateReference(reference) != null) {
-            return validator.validateReference(reference);
+        String message = validator.validateReference(reference);
+        if (message != null) {
+            return message;
         }
         try {
             out = new ObjectOutputStream(new FileOutputStream ("db.txt"));

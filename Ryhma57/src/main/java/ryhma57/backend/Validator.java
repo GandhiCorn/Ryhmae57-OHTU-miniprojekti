@@ -14,8 +14,9 @@ public class Validator {
     }
 
     public String validateReference(Reference reference) {
-        if (checkFields(reference) != null) {
-            return "Invalid or required field: " + checkFields(reference).getName();
+        BibtexReferenceField invalidField = checkFields(reference);
+        if (invalidField != null) {
+            return "Invalid or required field: " + invalidField.getName();
         }
         if (list.checkDuplicateId(reference)) {
             return "Duplicate ID";

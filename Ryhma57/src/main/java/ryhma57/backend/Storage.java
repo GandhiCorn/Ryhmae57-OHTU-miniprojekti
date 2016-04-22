@@ -21,8 +21,8 @@ public class Storage {
 
     public Storage() {
         list = new ReferenceList();
-        getPreviousReferenceList();
         validator = new Validator();
+        getPreviousReferenceList();
     }
 
     public String storeNewReference(Reference reference) {
@@ -69,12 +69,12 @@ public class Storage {
         try {
             in = new ObjectInputStream(new FileInputStream("db.txt"));
             list = (ReferenceList) in.readObject();
-            validator.setReferenceList(list);
         } catch (FileNotFoundException ex) {
             /* Do nothing if the file doesn't exist */
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        validator.setReferenceList(list);
     }
 
     /*TODO This propably should be refactored */

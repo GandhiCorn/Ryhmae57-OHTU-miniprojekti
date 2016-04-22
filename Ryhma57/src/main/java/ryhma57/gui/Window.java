@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 import java.util.EnumMap;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import ryhma57.backend.BibtexReferenceField;
 
 public class Window extends JFrame implements ActionListener {
@@ -31,8 +33,25 @@ public class Window extends JFrame implements ActionListener {
         JButton button;
         JScrollPane scrollPane;
         JPanel pane, aligner;
+        JPanel header;
+
+        header = new JPanel(new BorderLayout());
+
+        button = new JButton("Generate BibTeX file");
+        button.addActionListener(this);
+        button.setActionCommand(GENERATE);
+        header.add(new JLabel("[Search bar]"), BorderLayout.CENTER);
+        header.add(button, BorderLayout.LINE_END);
+        this.add(header, BorderLayout.NORTH);
+
+        /* add border and padding to the header panel */
+        Border bottomBorder = BorderFactory.createMatteBorder(0, 0, 1, 0,
+                Color.BLACK);
+        header.setBorder(BorderFactory.createCompoundBorder(bottomBorder,
+                new EmptyBorder(4, 4, 4, 4)));
+
         pane = new FieldsForm(this.app);
-        this.add(pane, BorderLayout.NORTH);
+        this.add(pane, BorderLayout.EAST);
 
         this.listView = new ListView(this.app);
         aligner = new JPanel();
@@ -41,14 +60,9 @@ public class Window extends JFrame implements ActionListener {
         scrollPane = new JScrollPane(aligner);
         this.add(scrollPane, BorderLayout.CENTER);
 
-        this.infoLabel = new JLabel("");
+        this.infoLabel = new JLabel("References were loaded succesfully.");
+        this.infoLabel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
         this.add(this.infoLabel, BorderLayout.SOUTH);
-
-        button = new JButton("Generate BibTeX file");
-        button.addActionListener(this);
-        button.setActionCommand(GENERATE);
-
-        this.add(button, BorderLayout.WEST);
     }
 
     public ListView getListView() {

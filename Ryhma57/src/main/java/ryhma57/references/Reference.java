@@ -6,6 +6,7 @@ import java.util.EnumSet;
 import ryhma57.backend.BibtexReferenceField;
 
 public abstract class Reference implements Serializable {
+    private static final long serialVersionUID = 7162163400760877670l;
     protected final EnumSet<BibtexReferenceField> existingFields;
     protected final EnumSet<BibtexReferenceField> requiredFields;
     private final String referenceType;

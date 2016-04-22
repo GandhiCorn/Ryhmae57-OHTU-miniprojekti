@@ -1,32 +1,30 @@
 package ryhma57.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /**
  * This component will contain the references.
  * It is currently under construction.
  */
-public class ListView extends JPanel {
+public class ListView extends JPanel implements MouseListener {
     private final Application app;
     private int length;
     private JLabel placeholder;
+    private int selectedRow;
 
     public ListView(Application app) {
         this.app = app;
         this.length = 0;
         this.setLayout(new GridBagLayout());
+        this.addMouseListener(this);
 
         createPlaceHolder();
     }
@@ -72,4 +70,59 @@ public class ListView extends JPanel {
         this.add(nameLabel, c);
         this.revalidate();
     }
+
+    private void renderRow() {
+        GridBagLayout layout = (GridBagLayout)this.getLayout();
+        for (Component c : this.getComponents()) {
+            GridBagConstraints cosntraints;
+            JLabel label = (JLabel)c;
+
+            cosntraints = layout.getConstraints(c);
+            if(cosntraints.gridy == this.selectedRow) {
+                label.setForeground(Color.black);
+                label.setBackground(Color.lightGray);
+                label.setOpaque(true);
+            } else {
+                label.setBackground(Color.white);
+                label.setOpaque(false);
+            }
+        }
+    }
+    private void selectItemAt(Point cursor) {
+        GridBagLayout layout = (GridBagLayout)this.getLayout();
+
+        for (Component c : this.getComponents()) {
+            GridBagConstraints cosntraints;
+
+            cosntraints = layout.getConstraints(c);
+
+            Point p = new Point(cursor);
+            p.x -= c.getX();
+            p.y -= c.getY();
+            if(c.contains(p)) {
+                this.selectedRow = cosntraints.gridy;
+                //cosntraints.gridx
+            }
+        }
+        renderRow();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        selectItemAt(e.getPoint());
+        /* here check if right button was clicked and create context menu */
+        //this.selectedRow tells the index of the selected reference
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) { }
+
+    @Override
+    public void mouseReleased(MouseEvent e) { }
+
+    @Override
+    public void mouseEntered(MouseEvent e) { }
+
+    @Override
+    public void mouseExited(MouseEvent e) { }
 }

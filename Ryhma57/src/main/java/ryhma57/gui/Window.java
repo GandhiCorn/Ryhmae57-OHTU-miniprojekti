@@ -13,7 +13,7 @@ public class Window extends JFrame implements ActionListener {
 
     static final String GENERATE = "generate";
     static final String CLEAR_LABEL = "clearLabel";
-    
+
     private Application app;
     private JLabel infoLabel;
     private ListView listView;
@@ -84,9 +84,10 @@ public class Window extends JFrame implements ActionListener {
             this.app.generateBibTex();
             JOptionPane.showMessageDialog(this,
                     "BibTex file was generated.");
+
         } else if (event.getActionCommand().equals(CLEAR_LABEL)) {
             this.infoLabel.setText("");
         }
-        
+
     }
 }

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import ryhma57.backend.BibtexReferenceField;
 
 public class FieldsForm extends JPanel implements ActionListener {
+
     private EnumMap<BibtexReferenceField, JFormattedTextField> fields;
     private static String SAVE = "save";
     static final String DROPDOWN = "dropdown";
@@ -36,6 +37,14 @@ public class FieldsForm extends JPanel implements ActionListener {
         input.setColumns(10);
         this.fields.put(field, input);
         inputPane.add(input);
+    }
+
+    public void clearInputFields() {
+        for (BibtexReferenceField field : this.fields.keySet()) {
+            JFormattedTextField input;
+            input = this.fields.get(field);
+            input.setValue("");
+        }
     }
 
     final public void createComponents() {
@@ -85,10 +94,14 @@ public class FieldsForm extends JPanel implements ActionListener {
                 input = this.fields.get(field);
                 set.put(field, input.getText());
             }
+            
+            
 
             this.app.createNewBookReference(set);
-        // Tässä pystyy käsittelemään drodownin actionia esim vaihtamaan talletustyypin eri referenssien välillä
+            clearInputFields();
+            // Tässä pystyy käsittelemään drodownin actionia esim vaihtamaan talletustyypin eri referenssien välillä
         } else if (event.getActionCommand().equals(DROPDOWN)) {
+            clearInputFields();
         }
     }
 }

@@ -29,11 +29,7 @@ public class ReferenceList implements Serializable {
     }
     
     public void deleteReference(Reference reference) {
-        for (Reference r : list) {
-            if (r.equals(reference)) {
-                list.remove(r);
-            }  
-        }
+        list.remove(reference);
     }
     
     public Reference get(int index) {

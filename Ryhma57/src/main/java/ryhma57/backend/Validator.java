@@ -30,7 +30,6 @@ public class Validator {
                 continue;
             }
             if (reference.getField(field) == null || reference.getField(field).equals("")) {
-                System.out.println("derp");
                 return field;
             }
         }

@@ -26,10 +26,10 @@ public class ListView extends JPanel implements MouseListener {
         this.setLayout(new GridBagLayout());
         this.addMouseListener(this);
 
-        createPlaceHolder();
+        addPlaceHolder();
     }
 
-    public final void createPlaceHolder() {
+    public final void addPlaceHolder() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
@@ -88,20 +88,42 @@ public class ListView extends JPanel implements MouseListener {
             }
         }
     }
+
+    public void removeRow(int index) {
+        GridBagLayout layout = (GridBagLayout)this.getLayout();
+        for (Component c : this.getComponents()) {
+            GridBagConstraints constraints;
+
+            constraints = layout.getConstraints(c);
+            if(constraints.gridy == index) {
+                this.remove(c);
+            } else if(constraints.gridy > index) {
+                constraints.gridy--;
+                layout.setConstraints(c, constraints);
+            }
+        }
+        if(this.getComponents().length == 0) {
+            this.addPlaceHolder();
+        }
+        this.validate();
+        this.repaint();
+    }
+
     private void selectItemAt(Point cursor) {
         GridBagLayout layout = (GridBagLayout)this.getLayout();
 
         for (Component c : this.getComponents()) {
-            GridBagConstraints cosntraints;
+            GridBagConstraints constraints;
 
-            cosntraints = layout.getConstraints(c);
+            constraints = layout.getConstraints(c);
 
             Point p = new Point(cursor);
             p.x -= c.getX();
             p.y -= c.getY();
             if(c.contains(p)) {
-                this.selectedRow = cosntraints.gridy;
-                //cosntraints.gridx
+                this.selectedRow = constraints.gridy;
+                //this.columnSelected = cosntraints.gridx
+                removeRow(this.selectedRow);
             }
         }
         renderRow();

@@ -15,7 +15,7 @@ public class BookTest {
 
     public BookTest() {
         kirja = new Book();
-	kirja.setID("ID1");
+	kirja.setField(ID, "ID1");
 	kirja.setField(AUTHOR, "Matti Nykänen");
 	kirja.setField(TITLE, "Kotkan lento");
 	kirja.setField(YEAR, "2002");

@@ -54,7 +54,10 @@ public class Application {
             //    window.setErrorMessage("Invalid or required field: " + field.getName());
             //    return;
             //}
-            ref.setField(field, fields.get(field));
+            String storedRef = storage.storeNewReference(ref);
+            if (storedRef != null) {
+                window.setErrorMessage(storedRef);
+            }
         }
         storage.storeNewReference(ref);
         window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));

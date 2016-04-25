@@ -29,7 +29,7 @@ public class Validator {
             if (field == BibtexReferenceField.AUTHOR || field == BibtexReferenceField.EDITOR) {
                 continue;
             }
-            if (reference.getField(field).equals("") || reference.getField(field) == null) {
+            if (reference.getField(field) == null || reference.getField(field).equals("")) {
                 return field;
             }
         }

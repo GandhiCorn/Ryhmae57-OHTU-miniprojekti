@@ -8,17 +8,22 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 /**
- * This component will contain the references.
- * It is currently under construction.
+ * This component will contain the references. It is currently under
+ * construction.
  */
 public class ListView extends JPanel implements MouseListener {
+
     private final Application app;
     private int length;
     private JLabel placeholder;
     private int selectedRow;
+    private JPopupMenu popup;
+    private JMenuItem menuItem;
 
     public ListView(Application app) {
         this.app = app;
@@ -48,7 +53,7 @@ public class ListView extends JPanel implements MouseListener {
         GridBagConstraints c = new GridBagConstraints();
 
         /* Remove the placeholder */
-        if(this.placeholder.getParent() == this) {
+        if (this.placeholder.getParent() == this) {
             this.remove(this.placeholder);
         }
 
@@ -72,13 +77,13 @@ public class ListView extends JPanel implements MouseListener {
     }
 
     private void renderRow() {
-        GridBagLayout layout = (GridBagLayout)this.getLayout();
+        GridBagLayout layout = (GridBagLayout) this.getLayout();
         for (Component c : this.getComponents()) {
             GridBagConstraints cosntraints;
-            JLabel label = (JLabel)c;
+            JLabel label = (JLabel) c;
 
             cosntraints = layout.getConstraints(c);
-            if(cosntraints.gridy == this.selectedRow) {
+            if (cosntraints.gridy == this.selectedRow) {
                 label.setForeground(Color.black);
                 label.setBackground(Color.lightGray);
                 label.setOpaque(true);
@@ -90,19 +95,19 @@ public class ListView extends JPanel implements MouseListener {
     }
 
     public void removeRow(int index) {
-        GridBagLayout layout = (GridBagLayout)this.getLayout();
+        GridBagLayout layout = (GridBagLayout) this.getLayout();
         for (Component c : this.getComponents()) {
             GridBagConstraints constraints;
 
             constraints = layout.getConstraints(c);
-            if(constraints.gridy == index) {
+            if (constraints.gridy == index) {
                 this.remove(c);
-            } else if(constraints.gridy > index) {
+            } else if (constraints.gridy > index) {
                 constraints.gridy--;
                 layout.setConstraints(c, constraints);
             }
         }
-        if(this.getComponents().length == 0) {
+        if (this.getComponents().length == 0) {
             this.addPlaceHolder();
         }
         this.validate();
@@ -110,7 +115,7 @@ public class ListView extends JPanel implements MouseListener {
     }
 
     private void selectItemAt(Point cursor) {
-        GridBagLayout layout = (GridBagLayout)this.getLayout();
+        GridBagLayout layout = (GridBagLayout) this.getLayout();
 
         for (Component c : this.getComponents()) {
             GridBagConstraints constraints;
@@ -120,10 +125,9 @@ public class ListView extends JPanel implements MouseListener {
             Point p = new Point(cursor);
             p.x -= c.getX();
             p.y -= c.getY();
-            if(c.contains(p)) {
+            if (c.contains(p)) {
                 this.selectedRow = constraints.gridy;
                 //this.columnSelected = cosntraints.gridx
-                removeRow(this.selectedRow);
             }
         }
         renderRow();
@@ -132,19 +136,29 @@ public class ListView extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         selectItemAt(e.getPoint());
-        /* here check if right button was clicked and create context menu */
-        //this.selectedRow tells the index of the selected reference
+
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            popup = new JPopupMenu();
+            menuItem = new JMenuItem("Delete");
+            menuItem.addMouseListener(this);
+            popup.add(menuItem);
+            popup.show(e.getComponent(), e.getX(), e.getY());
+        }        
     }
 
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(MouseEvent e) {
+    }
 }

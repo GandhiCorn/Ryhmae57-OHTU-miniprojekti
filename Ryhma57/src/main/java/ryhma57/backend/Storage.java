@@ -29,7 +29,7 @@ public class Storage {
         String message = validator.validateReference(reference);
         if (message != null) {
             return message;
-        }
+        } 
         try {
             out = new ObjectOutputStream(new FileOutputStream ("db.txt"));
             list.addReference(reference);

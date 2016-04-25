@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
@@ -16,7 +18,7 @@ import javax.swing.JPopupMenu;
  * This component will contain the references. It is currently under
  * construction.
  */
-public class ListView extends JPanel implements MouseListener {
+public class ListView extends JPanel implements MouseListener, ActionListener {
 
     private final Application app;
     private int length;
@@ -38,7 +40,7 @@ public class ListView extends JPanel implements MouseListener {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
-        c.gridy = this.length++;
+        c.gridy = 0;
         c.gridwidth = 2;
         c.weightx = c.weighty = 1.0;
         c.ipadx = c.ipady = 10;
@@ -140,7 +142,7 @@ public class ListView extends JPanel implements MouseListener {
         if (e.getButton() == MouseEvent.BUTTON3) {
             popup = new JPopupMenu();
             menuItem = new JMenuItem("Delete");
-            menuItem.addMouseListener(this);
+            menuItem.addActionListener(this);
             popup.add(menuItem);
             popup.show(e.getComponent(), e.getX(), e.getY());
         }        
@@ -160,5 +162,10 @@ public class ListView extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.app.removeReference(this.selectedRow);
     }
 }

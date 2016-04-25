@@ -38,6 +38,7 @@ public class Storage {
         } catch (IOException ex) {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        validator.setReferenceList(list);
         return "Reference saved successfully";
     }
 
@@ -53,6 +54,7 @@ public class Storage {
         } catch (IOException ex) {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        validator.setReferenceList(list);
     }
 
     public void generateBibTex() {

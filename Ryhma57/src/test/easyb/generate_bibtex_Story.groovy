@@ -9,8 +9,7 @@ scenario "Generoi BibTex tiedosto",{
     given "Applikaatio on olemassa ja meillä on fieldit", {
         Storage.removeTmpFiles()
         app = new Application()
-        window = new Window(app)
-        app.run(window)
+        app.run(null)
         fields = new EnumMap<BibtexReferenceField, String>(BibtexReferenceField.class)
         fields.put(BibtexReferenceField.ID, "test")
     }

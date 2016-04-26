@@ -1,4 +1,4 @@
 language: java
 before_script: cd Ryhma57
-script: mvn test
+script: mvn integer-test
 jdk: oraclejdk8

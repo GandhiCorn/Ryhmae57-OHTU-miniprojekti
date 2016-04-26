@@ -36,7 +36,9 @@ public class Application {
         for (Reference ref : list) {
             window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
         }
-        window.setVisible(true);
+        if(window != null) {
+            window.setVisible(true);
+        }
     }
 
     public void generateBibTex() {
@@ -56,6 +58,7 @@ public class Application {
             ref.setField(field, fields.get(field));
         }
         String error = storage.storeNewReference(ref);
+        if(window == null) return;
         if (error != null) {
             window.setErrorMessage(error);
         } else {
@@ -69,7 +72,9 @@ public class Application {
     }
 
     public void removeReference(int index) {
-        window.getListView().removeRow(index);
+        if(window != null) {
+            window.getListView().removeRow(index);
+        }
         Reference toBeDeleted = storage.getReferenceList().get(index);
         storage.removeReference(toBeDeleted);
     }

@@ -1,4 +1,4 @@
-package ryhma57.backend;
+package ryhma57.references;
 
 import ryhma57.references.Book;
 import static ryhma57.backend.BibtexReferenceField.*;

@@ -16,7 +16,7 @@ public class Inproceedings extends Reference {
     static {
         Inproceedings.requiredFields = Reference.createFieldSet(ID, AUTHOR,
                 TITLE, BOOKTITLE, YEAR);
-        Inproceedings.optionalFields = Reference.createFieldSet(EDITOR, 
+        Inproceedings.optionalFields = Reference.createFieldSet(EDITOR,
                 VOLUME, SERIES, PAGES, ADDRESS, MONTH, ORGANIZATION,
                 PUBLISHER, NOTE);
         Inproceedings.existingFields = Reference.createExistingSet(Inproceedings.requiredFields, Inproceedings.optionalFields);
@@ -24,5 +24,13 @@ public class Inproceedings extends Reference {
 
     public Inproceedings() {
         super(existingFields, requiredFields, "inproceedings");
+    }
+
+    public EnumSet<BibtexReferenceField> getExistingFields() {
+        return existingFields;
+    }
+
+    public EnumSet<BibtexReferenceField> getRequiredFields() {
+        return requiredFields;
     }
 }

@@ -6,6 +6,7 @@ import java.util.EnumSet;
 import ryhma57.backend.BibtexReferenceField;
 
 public abstract class Reference implements Serializable {
+
     private static final long serialVersionUID = 7162163400760877670l;
     protected final EnumSet<BibtexReferenceField> existingFields;
     protected final EnumSet<BibtexReferenceField> requiredFields;
@@ -54,14 +55,14 @@ public abstract class Reference implements Serializable {
     public final String getField(BibtexReferenceField field) {
         return fields.get(field);
     }
-    
-    public final EnumSet<BibtexReferenceField> getRequiredFields() {
-        return this.requiredFields;
-    }
+
+    public abstract EnumSet<BibtexReferenceField> getExistingFields(); 
+
+    public abstract EnumSet<BibtexReferenceField> getRequiredFields();
 
     /*FIXME inform about the problems with exceptions */
     public final void setField(BibtexReferenceField field, String value) {
-        if(!existingFields.contains(field)) {
+        if (!existingFields.contains(field)) {
             //FIXME we should propably throw exception here.
             System.out.println("Invalid field");
         }

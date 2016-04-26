@@ -3,14 +3,19 @@ package ryhma57.backend;
 import ryhma57.references.Reference;
 
 public class Validator {
+
     private ReferenceList list;
-    
+
     public Validator() {
         list = new ReferenceList();
     }
-    
+
     public void setReferenceList(ReferenceList list) {
         this.list = list;
+    }
+    
+    public boolean hasIDUsed(String id) {
+        return list.checkDuplicateId(id);
     }
 
     public String validateReference(Reference reference) {
@@ -18,26 +23,30 @@ public class Validator {
         if (invalidField != null) {
             return "Invalid or required field: " + invalidField.getName();
         }
-        if (list.checkDuplicateId(reference)) {
+        if (list.checkDuplicateId(reference.getID())) {
             return "Duplicate ID";
         }
         return null;
     }
-    
+
+    protected boolean hasField(Reference reference, BibtexReferenceField field) {
+        return !(reference.getField(field) == null || reference.getField(field).equals(""));
+    }
+
     private BibtexReferenceField checkFields(Reference reference) {
         for (BibtexReferenceField field : reference.getRequiredFields()) {
-            if (field == BibtexReferenceField.AUTHOR || field == BibtexReferenceField.EDITOR) {
+            if (field == BibtexReferenceField.AUTHOR || field == BibtexReferenceField.EDITOR || field == BibtexReferenceField.ID) {
                 continue;
             }
-            if (reference.getField(field) == null || reference.getField(field).equals("")) {
+            if (!hasField(reference, field)) {
                 return field;
             }
         }
-        if (reference.getField(BibtexReferenceField.AUTHOR).equals("") && 
-                reference.getField(BibtexReferenceField.EDITOR).equals("")) {
-            return BibtexReferenceField.AUTHOR;
+        if (hasField(reference, BibtexReferenceField.AUTHOR)
+                || hasField(reference, BibtexReferenceField.EDITOR)) {
+            return null;
         }
-        return null;
+        return BibtexReferenceField.AUTHOR;
     }
-    
+
 }

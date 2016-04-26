@@ -48,8 +48,8 @@ public class ReferenceList implements Serializable {
         return sb.toString();
     }
     
-    public boolean checkDuplicateId(Reference reference) {
-        return this.ids.contains(reference.getField(BibtexReferenceField.ID));
+    public boolean checkDuplicateId(String id) {
+        return this.ids.contains(id);
     }
     
     /* Metodi pelkkien kirjaolioiden saamiseksi

@@ -2,10 +2,13 @@ package ryhma57.gui;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ryhma57.backend.BibtexReferenceField;
 import ryhma57.references.Book;
 import ryhma57.references.Reference;
 import ryhma57.backend.ReferenceList;
+import ryhma57.backend.ReferenceType;
 import ryhma57.backend.Storage;
 
 /**
@@ -40,25 +43,25 @@ public class Application {
         storage.generateBibTex();
     }
 
-    public void createNewBookReference(EnumMap<BibtexReferenceField, String> fields) {
-        System.out.println("Create the book reference in the backend");
-
-        Reference ref = new Book();
+    public void createNewReference(ReferenceType type, EnumMap<BibtexReferenceField, String> fields) {
+        
+        Reference ref = null;
+        try {
+            ref = (Reference) type.getReferenceClass().newInstance();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         for (BibtexReferenceField field : fields.keySet()) {
-            //boolean result;
-            //result = ref.setField(field, fields.get(field));
-            //if(!result) {
-            //    window.setErrorMessage("Invalid or required field: " + field.getName());
-            //    return;
-            //}
             ref.setField(field, fields.get(field));
         }
-        String storedRef = storage.storeNewReference(ref);
-        if (storedRef != null) {
-            window.setErrorMessage(storedRef);
+        String error = storage.storeNewReference(ref);
+        if (error != null) {
+            window.setErrorMessage(error);
+        } else {
+            window.setErrorMessage("Reference saved successfully");
+            window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
         }
-        window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
     }
     
     public int getListSize() {

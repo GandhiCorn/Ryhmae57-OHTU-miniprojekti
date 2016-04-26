@@ -5,6 +5,7 @@ import ryhma57.backend.BibtexReferenceField;
 import static ryhma57.backend.BibtexReferenceField.*;
 
 public class Article extends Reference {
+
     private static EnumSet<BibtexReferenceField> existingFields;
     private static EnumSet<BibtexReferenceField> requiredFields, optionalFields;
 
@@ -19,5 +20,13 @@ public class Article extends Reference {
 
     public Article() {
         super(existingFields, requiredFields, "article");
+    }
+
+    public EnumSet<BibtexReferenceField> getExistingFields() {
+        return existingFields;
+    }
+
+    public EnumSet<BibtexReferenceField> getRequiredFields() {
+        return requiredFields;
     }
 }

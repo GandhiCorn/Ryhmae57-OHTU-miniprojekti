@@ -21,4 +21,12 @@ public class Book extends Reference implements Serializable {
     public Book() {
         super(existingFields, requiredFields, "book");
     }
+    
+    public EnumSet<BibtexReferenceField> getExistingFields() {
+        return existingFields;
+    }
+
+    public EnumSet<BibtexReferenceField> getRequiredFields() {
+        return requiredFields;
+    }
 }

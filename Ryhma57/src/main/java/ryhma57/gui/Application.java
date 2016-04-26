@@ -60,6 +60,10 @@ public class Application {
         }
         window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
     }
+    
+    public int getListSize() {
+        return storage.getReferenceList().size();
+    }
 
     public void removeReference(int index) {
         window.getListView().removeRow(index);

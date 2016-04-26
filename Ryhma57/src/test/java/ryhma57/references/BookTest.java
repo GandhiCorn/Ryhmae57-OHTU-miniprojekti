@@ -1,4 +1,4 @@
-package ryhma57.backend;
+package ryhma57.references;
 
 import ryhma57.references.Book;
 import static ryhma57.backend.BibtexReferenceField.*;
@@ -27,12 +27,7 @@ public class BookTest {
         kirja.setField(AUTHOR, "Janne Ahonen");
         assertEquals(kirja.getField(AUTHOR), "Janne Ahonen");
     }
-/*
-    @Test(expected=java.lang.NullPointerException.class)
-    public void testSetNullField() {
-        kirja.setField(PUBLISHER, null);
-    }
-*/
+
     @Test
     public void testGetField() {
         assertEquals("Otava", kirja.getField(PUBLISHER));

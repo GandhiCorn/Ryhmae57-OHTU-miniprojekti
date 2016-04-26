@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import ryhma57.references.Reference;
 
 public class Storage {
+
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private PrintWriter writer;
@@ -29,9 +30,22 @@ public class Storage {
         String message = validator.validateReference(reference);
         if (message != null) {
             return message;
-        } 
+        }
+        if (!validator.hasField(reference, BibtexReferenceField.ID)) {
+            String newID = reference.getField(BibtexReferenceField.AUTHOR).charAt(0) + reference.getField(BibtexReferenceField.YEAR);
+            reference.setField(BibtexReferenceField.ID, newID);
+        }
+        if (validator.hasIDUsed(reference.getID())) {
+            for (char i = 'a'; i <= 'z'; i++) {
+                String newID = reference.getID() + i;
+                if (!validator.hasIDUsed(newID)) {
+                    reference.setField(BibtexReferenceField.ID, newID);
+                    break;
+                }
+            }
+        }
         try {
-            out = new ObjectOutputStream(new FileOutputStream ("db.txt"));
+            out = new ObjectOutputStream(new FileOutputStream("db.txt"));
             list.addReference(reference);
             out.writeObject(list);
             out.flush();
@@ -49,7 +63,7 @@ public class Storage {
             writer.print("");
             writer.close();
             list.deleteReference(reference);
-            out = new ObjectOutputStream(new FileOutputStream ("db.txt"));
+            out = new ObjectOutputStream(new FileOutputStream("db.txt"));
             out.writeObject(list);
             out.flush();
         } catch (IOException ex) {
@@ -68,7 +82,7 @@ public class Storage {
         }
     }
 
-    private void getPreviousReferenceList()  {
+    private void getPreviousReferenceList() {
         try {
             in = new ObjectInputStream(new FileInputStream("db.txt"));
             list = (ReferenceList) in.readObject();

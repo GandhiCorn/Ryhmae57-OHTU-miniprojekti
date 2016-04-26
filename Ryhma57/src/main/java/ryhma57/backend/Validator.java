@@ -13,25 +13,29 @@ public class Validator {
     public void setReferenceList(ReferenceList list) {
         this.list = list;
     }
+    
+    public boolean hasIDUsed(String id) {
+        return list.checkDuplicateId(id);
+    }
 
     public String validateReference(Reference reference) {
         BibtexReferenceField invalidField = checkFields(reference);
         if (invalidField != null) {
             return "Invalid or required field: " + invalidField.getName();
         }
-        if (list.checkDuplicateId(reference)) {
+        if (list.checkDuplicateId(reference.getID())) {
             return "Duplicate ID";
         }
         return null;
     }
 
-    private boolean hasField(Reference reference, BibtexReferenceField field) {
+    protected boolean hasField(Reference reference, BibtexReferenceField field) {
         return !(reference.getField(field) == null || reference.getField(field).equals(""));
     }
 
     private BibtexReferenceField checkFields(Reference reference) {
         for (BibtexReferenceField field : reference.getRequiredFields()) {
-            if (field == BibtexReferenceField.AUTHOR || field == BibtexReferenceField.EDITOR) {
+            if (field == BibtexReferenceField.AUTHOR || field == BibtexReferenceField.EDITOR || field == BibtexReferenceField.ID) {
                 continue;
             }
             if (!hasField(reference, field)) {

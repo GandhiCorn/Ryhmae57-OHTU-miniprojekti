@@ -28,7 +28,6 @@ public class BookTest {
         assertEquals(kirja.getField(AUTHOR), "Janne Ahonen");
     }
 
-
     @Test
     public void testGetField() {
         assertEquals("Otava", kirja.getField(PUBLISHER));

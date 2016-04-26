@@ -72,7 +72,7 @@ public class Window extends JFrame implements ActionListener {
     public void setErrorMessage(String error) {
         Timer timer;
 
-        this.infoLabel.setText("The reference was saved");
+        this.infoLabel.setText(error);
         timer = new Timer(10000, this);
         timer.start();
         timer.setActionCommand(CLEAR_LABEL);

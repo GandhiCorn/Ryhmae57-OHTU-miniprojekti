@@ -13,12 +13,10 @@ import ryhma57.backend.Storage;
  */
 public class Application {
 
-    private ReferenceList referenceList;
     private Storage storage;
     private Window window;
 
     public Application() {
-        this.referenceList = new ReferenceList();
         this.storage = new Storage();
     }
 
@@ -56,7 +54,16 @@ public class Application {
             //}
             ref.setField(field, fields.get(field));
         }
-        storage.storeNewReference(ref);
+        String storedRef = storage.storeNewReference(ref);
+        if (storedRef != null) {
+            window.setErrorMessage(storedRef);
+        }
         window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
+    }
+
+    public void removeReference(int index) {
+        window.getListView().removeRow(index);
+        Reference toBeDeleted = storage.getReferenceList().get(index);
+        storage.removeReference(toBeDeleted);
     }
 }

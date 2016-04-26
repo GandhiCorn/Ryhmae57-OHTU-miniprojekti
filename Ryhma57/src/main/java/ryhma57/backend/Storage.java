@@ -37,9 +37,10 @@ public class Storage {
             out.flush();
         } catch (IOException ex) {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
+            return "exception happened";
         }
         validator.setReferenceList(list);
-        return "Reference saved successfully";
+        return null;
     }
 
     public void removeReference(Reference reference) {

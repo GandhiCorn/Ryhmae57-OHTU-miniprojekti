@@ -46,19 +46,15 @@ public class Application {
         Reference ref = new Book();
 
         for (BibtexReferenceField field : fields.keySet()) {
-            //boolean result;
-            //result = ref.setField(field, fields.get(field));
-            //if(!result) {
-            //    window.setErrorMessage("Invalid or required field: " + field.getName());
-            //    return;
-            //}
             ref.setField(field, fields.get(field));
         }
-        String storedRef = storage.storeNewReference(ref);
-        if (storedRef != null) {
-            window.setErrorMessage(storedRef);
+        String error = storage.storeNewReference(ref);
+        if (error != null) {
+            window.setErrorMessage(error);
+        } else {
+            window.setErrorMessage("Reference saved successfully");
+            window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
         }
-        window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
     }
 
     public void removeReference(int index) {

@@ -44,8 +44,7 @@ public class Application {
     }
 
     public void createNewReference(ReferenceType type, EnumMap<BibtexReferenceField, String> fields) {
-        System.out.println("Create the book reference in the backend");
-
+        
         Reference ref = null;
         try {
             ref = (Reference) type.getReferenceClass().newInstance();

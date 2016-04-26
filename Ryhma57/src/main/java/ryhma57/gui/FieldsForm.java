@@ -94,7 +94,11 @@ public class FieldsForm extends JPanel implements ActionListener {
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(FieldsForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        for (BibtexReferenceField field : dummy.getRequiredFields()) {
+            generateField(labelPane, inputPane, field);
+        }
         for (BibtexReferenceField field : dummy.getExistingFields()) {
+            if(dummy.getRequiredFields().contains(field)) continue;
             generateField(labelPane, inputPane, field);
         }
         this.revalidate();
@@ -112,8 +116,9 @@ public class FieldsForm extends JPanel implements ActionListener {
                 input = (JFormattedTextField) this.fields.get(field).getLabelFor();
                 set.put(field, input.getText());
             }
-
-            this.app.createNewBookReference(set);
+            
+            ReferenceType type = (ReferenceType) this.referenceList.getSelectedItem();
+            this.app.createNewReference(type, set);
             clearInputFields();
             // Tässä pystyy käsittelemään drodownin actionia esim vaihtamaan talletustyypin eri referenssien välillä
         } else if (event.getActionCommand().equals(DROPDOWN)) {

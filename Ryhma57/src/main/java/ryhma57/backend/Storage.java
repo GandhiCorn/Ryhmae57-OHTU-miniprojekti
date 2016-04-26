@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ryhma57.references.Reference;
@@ -97,5 +99,16 @@ public class Storage {
     /*TODO This propably should be refactored */
     public ReferenceList getReferenceList() {
         return list;
+    }
+    
+    public static void removeTmpFiles() {
+        try {
+            Files.delete(Paths.get("references.bib"));
+        } catch (IOException ex) {
+        }
+        try {
+            Files.delete(Paths.get("db.txt"));
+        } catch (IOException ex) {
+        }
     }
 }

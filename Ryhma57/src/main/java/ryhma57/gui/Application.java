@@ -64,8 +64,8 @@ public class Application {
         }
     }
     
-    public int getListSize() {
-        return storage.getReferenceList().size();
+    public ReferenceList getList() {
+        return storage.getReferenceList();
     }
 
     public void removeReference(int index) {

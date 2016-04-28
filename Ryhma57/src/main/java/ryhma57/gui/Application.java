@@ -18,9 +18,11 @@ public class Application {
 
     private Storage storage;
     private Window window;
+    private boolean searchMode;
 
     public Application() {
         this.storage = new Storage();
+        this.searchMode = false;
     }
 
     public static void main(String[] args) {
@@ -31,13 +33,17 @@ public class Application {
 
     public void run(Window window) {
         this.window = window;
-        /* this is currently for testing */
+        if(window != null) {
+            updateViewList();
+            window.setVisible(true);
+        }
+    }
+
+    private void updateViewList() {
         List<Reference> list = storage.getReferenceList().getAll();
+        window.getListView().clear();
         for (Reference ref : list) {
             window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
-        }
-        if(window != null) {
-            window.setVisible(true);
         }
     }
 
@@ -47,11 +53,12 @@ public class Application {
 
     public void createNewReference(ReferenceType type, EnumMap<BibtexReferenceField, String> fields) {
         
-        Reference ref = null;
+        Reference ref;
         try {
             ref = (Reference) type.getReferenceClass().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
 
         for (BibtexReferenceField field : fields.keySet()) {
@@ -66,16 +73,39 @@ public class Application {
             window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
         }
     }
-    
+
+    public void search(String query) {
+        if(query.length() == 0) {
+            updateViewList();
+            this.searchMode = false;
+        } else {
+            System.out.println("Search with query: " + query);
+            window.getListView().clear();
+            for(int i = 1; i < 10; i++) {
+                window.getListView().createRow("abc"+i, "Search result");
+            }
+            this.searchMode = true;
+        }
+    }
+
     public ReferenceList getList() {
         return storage.getReferenceList();
     }
 
     public void removeReference(int index) {
+        Reference reference;
+
         if(window != null) {
             window.getListView().removeRow(index);
         }
-        Reference toBeDeleted = storage.getReferenceList().get(index);
-        storage.removeReference(toBeDeleted);
+        if(this.searchMode) {
+            reference = null;/* get the right reference from search list */
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, new UnsupportedOperationException("Not implemented yet"));
+            System.exit(1);
+            return;
+        } else {
+            reference = storage.getReferenceList().get(index);
+        }
+        storage.removeReference(reference);
     }
 }

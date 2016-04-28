@@ -46,7 +46,7 @@ public class ListView extends JPanel implements MouseListener, ActionListener {
         c.ipadx = c.ipady = 10;
         c.anchor = GridBagConstraints.CENTER;
 
-        this.placeholder = new JLabel("No references created");
+        this.placeholder = new JLabel("No references");
         this.add(this.placeholder, c);
         this.revalidate();
     }
@@ -76,6 +76,16 @@ public class ListView extends JPanel implements MouseListener, ActionListener {
         c.weightx = 1.0;
         this.add(nameLabel, c);
         this.revalidate();
+    }
+
+    /* remove all rows and add the placeholder */
+    public void clear() {
+        for (Component c : this.getComponents()) {
+            this.remove(c);
+        }
+        this.addPlaceHolder();
+        this.validate();
+        this.repaint();
     }
 
     private void renderRow() {

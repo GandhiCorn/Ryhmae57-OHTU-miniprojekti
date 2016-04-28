@@ -3,20 +3,21 @@ package ryhma57.gui;
 import java.awt.*;
 import java.awt.event.*;
 
-import java.util.EnumMap;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import ryhma57.backend.BibtexReferenceField;
 
-public class Window extends JFrame implements ActionListener {
+public class Window extends JFrame implements ActionListener, KeyListener {
 
     static final String GENERATE = "generate";
     static final String CLEAR_LABEL = "clearLabel";
+    static final String SEARCH = "search";
 
     private Application app;
     private JLabel infoLabel;
+    private JTextField searchInput;
     private ListView listView;
+
 
     public Window(Application app) {
         this.app = app;
@@ -40,7 +41,14 @@ public class Window extends JFrame implements ActionListener {
         button = new JButton("Generate BibTeX file");
         button.addActionListener(this);
         button.setActionCommand(GENERATE);
-        header.add(new JLabel("[Search bar]"), BorderLayout.CENTER);
+
+        /*TODO we could add placeholder text for search field */
+        this.searchInput = new JTextField();
+        this.searchInput.addActionListener(this);
+        this.searchInput.setActionCommand(SEARCH);
+        this.searchInput.addKeyListener(this);
+
+        header.add(this.searchInput, BorderLayout.CENTER);
         header.add(button, BorderLayout.LINE_END);
         this.add(header, BorderLayout.NORTH);
 
@@ -87,7 +95,23 @@ public class Window extends JFrame implements ActionListener {
 
         } else if (event.getActionCommand().equals(CLEAR_LABEL)) {
             this.infoLabel.setText("");
+        } else if (event.getActionCommand().equals(SEARCH)) {
+           this.app.search(this.searchInput.getText());
         }
-
     }
+
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+           this.searchInput.setText("");
+           this.app.search("");
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) { }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }

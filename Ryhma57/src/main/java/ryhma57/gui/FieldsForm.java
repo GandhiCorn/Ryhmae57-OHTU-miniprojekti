@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import ryhma57.backend.BibtexReferenceField;
 import ryhma57.backend.ReferenceType;
-import static ryhma57.backend.ReferenceType.*;
 import ryhma57.references.Reference;
 
 public class FieldsForm extends JPanel implements ActionListener {
@@ -82,7 +81,7 @@ public class FieldsForm extends JPanel implements ActionListener {
     }
 
     private void generateFields(ReferenceType type) {
-        Reference dummy = null;
+        Reference dummy;
         for(JLabel oldLabel: this.fields.values()) {
             this.inputPane.remove(oldLabel.getLabelFor());
             this.labelPane.remove(oldLabel);
@@ -93,7 +92,9 @@ public class FieldsForm extends JPanel implements ActionListener {
             dummy = (Reference) type.getReferenceClass().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(FieldsForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
+
         for (BibtexReferenceField field : dummy.getRequiredFields()) {
             generateField(labelPane, inputPane, field);
         }
@@ -120,7 +121,7 @@ public class FieldsForm extends JPanel implements ActionListener {
             ReferenceType type = (ReferenceType) this.referenceList.getSelectedItem();
             this.app.createNewReference(type, set);
             clearInputFields();
-            // Tässä pystyy käsittelemään drodownin actionia esim vaihtamaan talletustyypin eri referenssien välillä
+
         } else if (event.getActionCommand().equals(DROPDOWN)) {
             clearInputFields();
             ReferenceType type = (ReferenceType) this.referenceList.getSelectedItem();

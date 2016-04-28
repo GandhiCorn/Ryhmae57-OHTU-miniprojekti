@@ -31,13 +31,17 @@ public class Application {
 
     public void run(Window window) {
         this.window = window;
-        /* this is currently for testing */
+        if(window != null) {
+            updateViewList();
+            window.setVisible(true);
+        }
+    }
+
+    private void updateViewList() {
         List<Reference> list = storage.getReferenceList().getAll();
+        window.getListView().clear();
         for (Reference ref : list) {
             window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
-        }
-        if(window != null) {
-            window.setVisible(true);
         }
     }
 
@@ -47,7 +51,7 @@ public class Application {
 
     public void createNewReference(ReferenceType type, EnumMap<BibtexReferenceField, String> fields) {
         
-        Reference ref = null;
+        Reference ref;
         try {
             ref = (Reference) type.getReferenceClass().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -69,9 +73,17 @@ public class Application {
     }
 
     public void search(String query) {
-        System.out.println("Search with query: " + query);
+        if(query.length() == 0) {
+            updateViewList();
+        } else {
+            System.out.println("Search with query: " + query);
+            window.getListView().clear();
+            for(int i = 1; i < 10; i++) {
+                window.getListView().createRow("abc"+i, "Search result");
+            }
+        }
     }
-    
+
     public ReferenceList getList() {
         return storage.getReferenceList();
     }

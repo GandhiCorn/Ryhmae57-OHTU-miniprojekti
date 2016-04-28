@@ -3,13 +3,11 @@ package ryhma57.gui;
 import java.awt.*;
 import java.awt.event.*;
 
-import java.util.EnumMap;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import ryhma57.backend.BibtexReferenceField;
 
-public class Window extends JFrame implements ActionListener {
+public class Window extends JFrame implements ActionListener, KeyListener {
 
     static final String GENERATE = "generate";
     static final String CLEAR_LABEL = "clearLabel";
@@ -48,6 +46,7 @@ public class Window extends JFrame implements ActionListener {
         this.searchInput = new JTextField();
         this.searchInput.addActionListener(this);
         this.searchInput.setActionCommand(SEARCH);
+        this.searchInput.addKeyListener(this);
 
         header.add(this.searchInput, BorderLayout.CENTER);
         header.add(button, BorderLayout.LINE_END);
@@ -100,4 +99,19 @@ public class Window extends JFrame implements ActionListener {
            this.app.search(this.searchInput.getText());
         }
     }
+
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+           this.searchInput.setText("");
+           this.app.search("");
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) { }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }

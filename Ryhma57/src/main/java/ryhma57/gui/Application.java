@@ -18,9 +18,11 @@ public class Application {
 
     private Storage storage;
     private Window window;
+    private boolean searchMode;
 
     public Application() {
         this.storage = new Storage();
+        this.searchMode = false;
     }
 
     public static void main(String[] args) {
@@ -75,12 +77,14 @@ public class Application {
     public void search(String query) {
         if(query.length() == 0) {
             updateViewList();
+            this.searchMode = false;
         } else {
             System.out.println("Search with query: " + query);
             window.getListView().clear();
             for(int i = 1; i < 10; i++) {
                 window.getListView().createRow("abc"+i, "Search result");
             }
+            this.searchMode = true;
         }
     }
 
@@ -89,10 +93,19 @@ public class Application {
     }
 
     public void removeReference(int index) {
+        Reference reference;
+
         if(window != null) {
             window.getListView().removeRow(index);
         }
-        Reference toBeDeleted = storage.getReferenceList().get(index);
-        storage.removeReference(toBeDeleted);
+        if(this.searchMode) {
+            reference = null;/* get the right reference from search list */
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, new UnsupportedOperationException("Not implemented yet"));
+            System.exit(1);
+            return;
+        } else {
+            reference = storage.getReferenceList().get(index);
+        }
+        storage.removeReference(reference);
     }
 }

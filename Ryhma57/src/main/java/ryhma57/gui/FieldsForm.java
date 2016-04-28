@@ -93,6 +93,7 @@ public class FieldsForm extends JPanel implements ActionListener {
             dummy = (Reference) type.getReferenceClass().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(FieldsForm.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
         for (BibtexReferenceField field : dummy.getRequiredFields()) {
             generateField(labelPane, inputPane, field);

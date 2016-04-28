@@ -52,6 +52,7 @@ public class Application {
             ref = (Reference) type.getReferenceClass().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
 
         for (BibtexReferenceField field : fields.keySet()) {

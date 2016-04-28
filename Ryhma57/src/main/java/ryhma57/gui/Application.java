@@ -66,6 +66,10 @@ public class Application {
             window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
         }
     }
+
+    public void search(String query) {
+        System.out.println("Search with query: " + query);
+    }
     
     public ReferenceList getList() {
         return storage.getReferenceList();

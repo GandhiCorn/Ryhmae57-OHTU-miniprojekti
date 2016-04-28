@@ -13,10 +13,13 @@ public class Window extends JFrame implements ActionListener {
 
     static final String GENERATE = "generate";
     static final String CLEAR_LABEL = "clearLabel";
+    static final String SEARCH = "search";
 
     private Application app;
     private JLabel infoLabel;
+    private JTextField searchInput;
     private ListView listView;
+
 
     public Window(Application app) {
         this.app = app;
@@ -40,7 +43,13 @@ public class Window extends JFrame implements ActionListener {
         button = new JButton("Generate BibTeX file");
         button.addActionListener(this);
         button.setActionCommand(GENERATE);
-        header.add(new JLabel("[Search bar]"), BorderLayout.CENTER);
+
+        /*TODO we could add placeholder text for search field */
+        this.searchInput = new JTextField();
+        this.searchInput.addActionListener(this);
+        this.searchInput.setActionCommand(SEARCH);
+
+        header.add(this.searchInput, BorderLayout.CENTER);
         header.add(button, BorderLayout.LINE_END);
         this.add(header, BorderLayout.NORTH);
 
@@ -87,7 +96,8 @@ public class Window extends JFrame implements ActionListener {
 
         } else if (event.getActionCommand().equals(CLEAR_LABEL)) {
             this.infoLabel.setText("");
+        } else if (event.getActionCommand().equals(SEARCH)) {
+           this.app.search(this.searchInput.getText());
         }
-
     }
 }

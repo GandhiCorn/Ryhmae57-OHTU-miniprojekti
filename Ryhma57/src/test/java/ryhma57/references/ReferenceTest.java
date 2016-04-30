@@ -61,7 +61,7 @@ public class ReferenceTest {
     public void testGetRequiredFields() {
         
         Reference instance = new Book();
-        EnumSet<BibtexReferenceField> expResult = Reference.createFieldSet(ID, AUTHOR,
+        EnumSet<BibtexReferenceField> expResult = EnumSet.of(ID, AUTHOR,
                 EDITOR, TITLE, YEAR, PUBLISHER); ;
         EnumSet<BibtexReferenceField> result = instance.getRequiredFields();
         assertEquals(expResult, result);

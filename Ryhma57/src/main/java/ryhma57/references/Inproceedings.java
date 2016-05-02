@@ -18,7 +18,7 @@ public class Inproceedings extends Reference {
                 TITLE, BOOKTITLE, YEAR);
         Inproceedings.optionalFields = Reference.createFieldSet(EDITOR,
                 VOLUME, SERIES, PAGES, ADDRESS, MONTH, ORGANIZATION,
-                PUBLISHER, NOTE);
+                PUBLISHER, NOTE, TAGS);
         Inproceedings.existingFields = Reference.createExistingSet(Inproceedings.requiredFields, Inproceedings.optionalFields);
     }
 

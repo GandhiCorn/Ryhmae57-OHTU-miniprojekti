@@ -13,7 +13,7 @@ public class Book extends Reference implements Serializable {
         Book.requiredFields = Reference.createFieldSet(ID, AUTHOR,
                 EDITOR, TITLE, YEAR, PUBLISHER);
         Book.optionalFields = Reference.createFieldSet(VOLUME,
-                NUMBER, SERIES, ADDRESS, EDITION, MONTH, NOTE);
+                NUMBER, SERIES, ADDRESS, EDITION, MONTH, NOTE, TAGS);
         Book.existingFields = Reference.createExistingSet(
                 Book.requiredFields, Book.optionalFields);
     }

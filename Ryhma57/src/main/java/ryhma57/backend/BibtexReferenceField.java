@@ -33,7 +33,7 @@ public enum BibtexReferenceField {
     TYPE("type"),
     VOLUME("volume"),
     YEAR("year"),
-    TAG("tag");
+    TAGS("tags");
 
     private final String name;
 

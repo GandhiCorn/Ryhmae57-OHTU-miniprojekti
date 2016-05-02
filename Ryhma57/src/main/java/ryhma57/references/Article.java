@@ -13,7 +13,7 @@ public class Article extends Reference {
         Article.requiredFields = Reference.createFieldSet(ID, AUTHOR,
                 TITLE, JOURNAL, YEAR);
         Article.optionalFields = Reference.createFieldSet(VOLUME,
-                SERIES, ADDRESS, EDITION, MONTH, NOTE);
+                SERIES, ADDRESS, EDITION, MONTH, NOTE, TAGS);
         Article.existingFields = Reference.createExistingSet(
                 Article.requiredFields, Article.optionalFields);
     }

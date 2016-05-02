@@ -5,8 +5,8 @@ import static ryhma57.backend.ReferenceType.*
 import java.nio.file.Files
 import java.nio.file.Paths
 
-scenario "Lisää uusi artikkeli referenssi",{
-    given "Applikaatio on olemassa ja meillä on fieldit", {
+scenario "Muista vanhat referenssit",{
+    given "Luo referenssejä", {
         Storage.removeTmpFiles()
         app = new Application()
         app.run(null)
@@ -16,11 +16,15 @@ scenario "Lisää uusi artikkeli referenssi",{
         fields.put(BibtexReferenceField.TITLE, "Kotkan lento")
         fields.put(BibtexReferenceField.YEAR, "2002")
         fields.put(BibtexReferenceField.JOURNAL, "Otava")
-    }
-    when "Luo referenssi", {
         app.createNewReference(ARTICLE, fields)
+        app = null
+
     }
-    then "Tarkista että referenssi ollaan luotu", {
+    when "Avaa ohjelma uudelleen", {
+        app = new Application()
+        app.run(null)
+    }
+    then "Tarkista että referenssi on edelleen olemassa", {
         app.getList().size().shouldBe 1
         (app.getList().get(0) instanceof Article).shouldBe true
     }

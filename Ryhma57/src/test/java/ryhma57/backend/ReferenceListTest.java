@@ -1,6 +1,5 @@
 package ryhma57.backend;
 
-import ryhma57.references.Book;
 import ryhma57.references.Reference;
 import static ryhma57.backend.BibtexReferenceField.*;
 import java.util.List;
@@ -19,21 +18,21 @@ public class ReferenceListTest {
     private Reference r3;
     
     public ReferenceListTest() {
-        r1 = new Book();
+        r1 = new Reference(ReferenceType.BOOK);
         r1.setField(ID, "ID1");
         r1.setField(AUTHOR, "Author1");
         r1.setField(TITLE, "Title1");
         r1.setField(YEAR, "Year1");
         r1.setField(PUBLISHER, "Publisher1");
 
-        r2 = new Book();
+        r2 = new Reference(ReferenceType.BOOK);
         r2.setField(ID, "ID2");
         r2.setField(AUTHOR, "Author2");
         r2.setField(TITLE, "Title2");
         r2.setField(YEAR, "Year2");
         r2.setField(PUBLISHER, "Publisher2");
 
-        r3 = new Book();
+        r3 = new Reference(ReferenceType.BOOK);
         r3.setField(ID, "ID3");
         r3.setField(AUTHOR, "Author3");
         r3.setField(TITLE, "Title3");

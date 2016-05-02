@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import ryhma57.backend.BibtexReferenceField;
 import ryhma57.backend.ReferenceType;
 import ryhma57.references.Reference;
+import ryhma57.references.ReferenceFields;
 
 public class FieldsForm extends JPanel implements ActionListener {
 
@@ -81,25 +82,19 @@ public class FieldsForm extends JPanel implements ActionListener {
     }
 
     private void generateFields(ReferenceType type) {
-        Reference dummy;
         for(JLabel oldLabel: this.fields.values()) {
             this.inputPane.remove(oldLabel.getLabelFor());
             this.labelPane.remove(oldLabel);
         }
         this.fields.clear();
         
-        try {
-            dummy = (Reference) type.getReferenceClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(FieldsForm.class.getName()).log(Level.SEVERE, null, ex);
+        if (ReferenceFields.getAllFields(type).isEmpty())
             return;
-        }
 
-        for (BibtexReferenceField field : dummy.getRequiredFields()) {
+        for (BibtexReferenceField field : ReferenceFields.getRequiredFields(type)) {
             generateField(labelPane, inputPane, field);
         }
-        for (BibtexReferenceField field : dummy.getExistingFields()) {
-            if(dummy.getRequiredFields().contains(field)) continue;
+        for (BibtexReferenceField field : ReferenceFields.getOptionalFields(type)) {
             generateField(labelPane, inputPane, field);
         }
         this.revalidate();

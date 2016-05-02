@@ -5,6 +5,7 @@ import ryhma57.references.Reference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import ryhma57.references.ReferenceFields;
 
 public class ReferenceList implements Serializable {
     private static final long serialVersionUID = 2504774830084138204l;
@@ -56,7 +57,7 @@ public class ReferenceList implements Serializable {
     public List<Reference> search(String word) {
         List<Reference> searchList = new ArrayList<Reference>() {};
         for (Reference r : list) {
-            for (BibtexReferenceField f : r.getExistingFields()) {
+            for (BibtexReferenceField f : ReferenceFields.getAllFields(r.getReferenceType())) {
                 if (r.getField(f).contains(word)) {
                     searchList.add(r);
                     break;

@@ -1,6 +1,7 @@
 package ryhma57.backend;
 
 import ryhma57.references.Reference;
+import ryhma57.references.ReferenceFields;
 
 public class Validator {
 
@@ -34,7 +35,7 @@ public class Validator {
     }
 
     private BibtexReferenceField checkFields(Reference reference) {
-        for (BibtexReferenceField field : reference.getRequiredFields()) {
+        for (BibtexReferenceField field : ReferenceFields.getRequiredFields(reference.getReferenceType())) {
             if (field == BibtexReferenceField.AUTHOR || field == BibtexReferenceField.EDITOR || field == BibtexReferenceField.ID) {
                 continue;
             }

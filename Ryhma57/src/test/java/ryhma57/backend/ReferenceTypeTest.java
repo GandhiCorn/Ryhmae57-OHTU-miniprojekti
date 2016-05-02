@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import ryhma57.references.*;
 
 public class ReferenceTypeTest {
     
@@ -62,24 +61,6 @@ public class ReferenceTypeTest {
         ReferenceType instance3 = ReferenceType.INPROCEEDINGS;
         String expResult3 = "Inproceedings";
         String result3 = instance3.toString();
-        assertEquals(expResult3, result3);
-    }
-
-    @Test
-    public void testGetReferenceClass() {
-        ReferenceType instance = ReferenceType.ARTICLE;
-        Class expResult = Article.class;
-        Class result = instance.getReferenceClass();
-        assertEquals(expResult, result);
-        
-        ReferenceType instance2 = ReferenceType.BOOK;
-        Class expResult2 = Book.class;
-        Class result2 = instance2.getReferenceClass();
-        assertEquals(expResult2, result2);
-        
-        ReferenceType instance3 = ReferenceType.INPROCEEDINGS;
-        Class expResult3 = Inproceedings.class;
-        Class result3 = instance3.getReferenceClass();
         assertEquals(expResult3, result3);
     }
     

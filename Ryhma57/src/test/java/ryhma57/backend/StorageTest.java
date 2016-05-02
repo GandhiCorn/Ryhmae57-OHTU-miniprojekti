@@ -11,17 +11,16 @@ import static ryhma57.backend.BibtexReferenceField.ID;
 import static ryhma57.backend.BibtexReferenceField.PUBLISHER;
 import static ryhma57.backend.BibtexReferenceField.TITLE;
 import static ryhma57.backend.BibtexReferenceField.YEAR;
-import ryhma57.references.Book;
 import ryhma57.references.Reference;
 
 public class StorageTest {
     
     private Storage storage;
-    private Book book;
+    private Reference book;
     
     public StorageTest() {
         storage = new Storage();
-        book = new Book();
+        book = new Reference(ReferenceType.BOOK);
         book.setField(ID, "ID1");
 	book.setField(AUTHOR, "Matti Nykänen");
 	book.setField(TITLE, "Kotkan lento");

@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ryhma57.references.Book;
+import ryhma57.references.Reference;
 
 public class ValidatorTest {
     
@@ -38,7 +39,7 @@ public class ValidatorTest {
 
     @Test
     public void testDuplicateIdCheck() {
-        Book book =  new Book();
+        Reference book =  new Reference(ReferenceType.BOOK);
         book.setField(BibtexReferenceField.ID, "ID");
         book.setField(BibtexReferenceField.AUTHOR, "author");
         book.setField(BibtexReferenceField.PUBLISHER, "publisher");
@@ -46,7 +47,7 @@ public class ValidatorTest {
         book.setField(BibtexReferenceField.TITLE, "title");
         list.addReference(book);
         validator.setReferenceList(list);
-        Book book2 = new Book();
+        Reference book2 = new Reference(ReferenceType.BOOK);
         book2.setField(BibtexReferenceField.ID, "ID");
         book2.setField(BibtexReferenceField.AUTHOR, "author");
         book2.setField(BibtexReferenceField.PUBLISHER, "publisher");
@@ -57,7 +58,7 @@ public class ValidatorTest {
     
     @Test
     public void testAuthorRequired() {
-        Book book =  new Book();
+        Reference book =  new Reference(ReferenceType.BOOK);
         book.setField(BibtexReferenceField.ID, "ID");
         book.setField(BibtexReferenceField.PUBLISHER, "publisher");
         book.setField(BibtexReferenceField.YEAR, "year");
@@ -67,7 +68,7 @@ public class ValidatorTest {
     
     @Test
     public void testTitleRequired() {
-        Book book =  new Book();
+        Reference book =  new Reference(ReferenceType.BOOK);
         book.setField(BibtexReferenceField.ID, "ID");
         book.setField(BibtexReferenceField.AUTHOR, "author");
         book.setField(BibtexReferenceField.PUBLISHER, "publisher");
@@ -77,7 +78,7 @@ public class ValidatorTest {
     
     @Test
     public void testNoAuthorRequiredIfEditorIsGiven() {
-        Book book =  new Book();
+        Reference book =  new Reference(ReferenceType.BOOK);
         book.setField(BibtexReferenceField.ID, "ID");
         book.setField(BibtexReferenceField.EDITOR, "editor");
         book.setField(BibtexReferenceField.PUBLISHER, "publisher");

@@ -5,3 +5,7 @@
 *.bib
 *.json
 .DS_Store
+
+#ignore Linux temp files
+*~
+

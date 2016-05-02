@@ -19,6 +19,7 @@ public class Application {
     private Storage storage;
     private Window window;
     private boolean searchMode;
+    private List<Reference> searchResultList;
 
     public Application() {
         this.storage = new Storage();
@@ -79,10 +80,10 @@ public class Application {
             updateViewList();
             this.searchMode = false;
         } else {
-            List<Reference> resultList = storage.getReferenceList().search(query);
+            searchResultList = storage.getReferenceList().search(query);
             System.out.println("Search with query: " + query);
             window.getListView().clear();
-            for (Reference r : resultList) {
+            for (Reference r : searchResultList) {
                 for (BibtexReferenceField f : r.getExistingFields()) {
                     String row = r.getField(f);
                     if (row.length() > 0) {
@@ -106,10 +107,7 @@ public class Application {
             window.getListView().removeRow(index);
         }
         if(this.searchMode) {
-            reference = null;/* get the right reference from search list */
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, new UnsupportedOperationException("Not implemented yet"));
-            System.exit(1);
-            return;
+            reference = this.searchResultList.get(index);
         } else {
             reference = storage.getReferenceList().get(index);
         }

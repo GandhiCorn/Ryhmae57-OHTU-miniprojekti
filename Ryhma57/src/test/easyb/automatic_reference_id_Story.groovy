@@ -21,7 +21,7 @@ scenario "Automaattisesti luo id",{
     }
     then "Tarkista että referenssi ollaan luotu", {
         app.getList().size().shouldBe 1
-        (app.getList().get(0) instanceof Article).shouldBe true
+        (app.getList().get(0).getReferenceType()).shouldBe ARTICLE
         app.getList().get(0).getField(BibtexReferenceField.ID).shouldBe "M2002"
     }
 }

@@ -22,6 +22,6 @@ scenario "Lisää uusi kirja referenssi",{
     }
     then "Tarkista että referenssi ollaan luotu", {
         app.getList().size().shouldBe 1
-        (app.getList().get(0) instanceof Book).shouldBe true
+        (app.getList().get(0).getReferenceType()).shouldBe BOOK
     }
 }

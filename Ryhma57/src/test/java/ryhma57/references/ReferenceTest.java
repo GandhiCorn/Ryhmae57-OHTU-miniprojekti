@@ -5,20 +5,13 @@
  */
 package ryhma57.references;
 
-import java.util.EnumSet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
-import ryhma57.backend.BibtexReferenceField;
-import static ryhma57.backend.BibtexReferenceField.AUTHOR;
-import static ryhma57.backend.BibtexReferenceField.EDITOR;
-import static ryhma57.backend.BibtexReferenceField.ID;
-import static ryhma57.backend.BibtexReferenceField.PUBLISHER;
-import static ryhma57.backend.BibtexReferenceField.TITLE;
-import static ryhma57.backend.BibtexReferenceField.YEAR;
+import org.junit.Test;
+import static ryhma57.backend.BibtexReferenceField.*;
 import ryhma57.backend.ReferenceType;
 
 /**
@@ -26,46 +19,61 @@ import ryhma57.backend.ReferenceType;
  * @author Simo
  */
 public class ReferenceTest {
-    
+
+    Reference reference;
+
     public ReferenceTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
+        reference = new Reference(ReferenceType.BOOK);
+        reference.setField(ID, "ID1");
+        reference.setField(AUTHOR, "Matti Nykänen");
+        reference.setField(TITLE, "Kotkan lento");
+        reference.setField(YEAR, "2002");
+        reference.setField(PUBLISHER, "Otava");
     }
-    
+
     @After
     public void tearDown() {
     }
 
-    
-
+    @Test
     public void testGetID() {
-        
-        Reference instance = new Book();
-        instance.setField(ID, "3");
+        reference.setField(ID, "3");
         String expResult = "3";
-        String result = instance.getID();
+        String result = reference.getID();
         assertEquals(expResult, result);
     }
 
     @Test
-    public void testGetRequiredFields() {
-        
-        Reference instance = new Book();
-        EnumSet<BibtexReferenceField> expResult = EnumSet.of(ID, AUTHOR,
-                EDITOR, TITLE, YEAR, PUBLISHER); ;
-        EnumSet<BibtexReferenceField> result = instance.getRequiredFields();
-        assertEquals(expResult, result);
-       
+    public void testSetField() {
+        reference.setField(AUTHOR, "Janne Ahonen");
+        assertEquals(reference.getField(AUTHOR), "Janne Ahonen");
     }
-   
+
+    @Test
+    public void testGetField() {
+        assertEquals("Otava", reference.getField(PUBLISHER));
+    }
+
+    @Test
+    public void testToBibTex() {
+        String tuloste = reference.toBibTex();
+        assertEquals(tuloste, "@book{ID1,\n"
+                + "\tauthor = {Matti Nykänen},\n"
+                + "\tpublisher = {Otava},\n"
+                + "\ttitle = {Kotkan lento},\n"
+                + "\tyear = {2002},\n"
+                + "}");
+    }
 }

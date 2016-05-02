@@ -26,6 +26,6 @@ scenario "Muista vanhat referenssit",{
     }
     then "Tarkista että referenssi on edelleen olemassa", {
         app.getList().size().shouldBe 1
-        (app.getList().get(0) instanceof Article).shouldBe true
+        (app.getList().get(0).getReferenceType()).shouldBe ARTICLE
     }
 }

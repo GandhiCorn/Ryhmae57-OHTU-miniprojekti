@@ -7,14 +7,13 @@ import static ryhma57.backend.BibtexReferenceField.*;
  *
  * @author Simo
  */
-public class Inproceedings extends Reference {
+public class Inproceedings extends ReferenceFields {
 
     public Inproceedings() {
         super(
                 EnumSet.of(ID, AUTHOR, TITLE, BOOKTITLE, YEAR),
                 EnumSet.of(EDITOR, VOLUME, SERIES, PAGES, ADDRESS, MONTH,
-                        ORGANIZATION, PUBLISHER, NOTE),
-                "inproceedings"
+                        ORGANIZATION, PUBLISHER, NOTE)
         );
     }
 

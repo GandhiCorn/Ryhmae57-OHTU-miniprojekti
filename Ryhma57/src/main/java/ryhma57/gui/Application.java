@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ryhma57.backend.BibtexReferenceField;
-import ryhma57.references.Book;
 import ryhma57.references.Reference;
 import ryhma57.backend.ReferenceList;
 import ryhma57.backend.ReferenceType;
 import ryhma57.backend.Storage;
+import ryhma57.references.ReferenceFields;
 
 /**
  * This is the main class currently.
@@ -54,13 +54,7 @@ public class Application {
 
     public void createNewReference(ReferenceType type, EnumMap<BibtexReferenceField, String> fields) {
         
-        Reference ref;
-        try {
-            ref = (Reference) type.getReferenceClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
+        Reference ref = new Reference(type);
 
         for (BibtexReferenceField field : fields.keySet()) {
             ref.setField(field, fields.get(field));
@@ -84,7 +78,7 @@ public class Application {
             System.out.println("Search with query: " + query);
             window.getListView().clear();
             for (Reference r : searchResultList) {
-                for (BibtexReferenceField f : r.getExistingFields()) {
+                for (BibtexReferenceField f : ReferenceFields.getAllFields(r.getReferenceType())) {
                     String row = r.getField(f);
                     if (row.length() > 0) {
                         window.getListView().createRow(f.getName(), row);

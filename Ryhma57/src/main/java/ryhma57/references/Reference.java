@@ -1,8 +1,12 @@
 package ryhma57.references;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.function.UnaryOperator;
 import ryhma57.backend.BibtexReferenceField;
 
 public abstract class Reference implements Serializable {
@@ -12,6 +16,8 @@ public abstract class Reference implements Serializable {
     protected final EnumSet<BibtexReferenceField> requiredFields;
     private final String referenceType;
     private EnumMap<BibtexReferenceField, String> fields;
+    private List<String> authors;
+    private List<String> tags;
 
     /**
      * Helper function for creating the field sets.
@@ -46,6 +52,8 @@ public abstract class Reference implements Serializable {
         this.existingFields = existingFields;
         this.requiredFields = requiredFields;
         this.referenceType = referenceType;
+        this.authors = new ArrayList<>();
+        this.tags = new ArrayList<>();
     }
 
     public final String getID() {
@@ -56,7 +64,7 @@ public abstract class Reference implements Serializable {
         return fields.get(field);
     }
 
-    public abstract EnumSet<BibtexReferenceField> getExistingFields(); 
+    public abstract EnumSet<BibtexReferenceField> getExistingFields();
 
     public abstract EnumSet<BibtexReferenceField> getRequiredFields();
 
@@ -66,10 +74,44 @@ public abstract class Reference implements Serializable {
             //FIXME we should propably throw exception here.
             System.out.println("Invalid field");
         }
+
+        if (field.getName().equals("author")) {
+            this.authors = splitToList(value);
+        }
+
+        if (field.getName().equals("tag")) {
+            this.tags = splitToList(value);
+        }
+
         fields.put(field, value);
     }
 
+    private List<String> splitToList(String value) {
+        List<String> returned = new ArrayList<>();
+        String[] values = value.split(",");
+        for (String v : values) {
+            v = v.trim();
+            v = v.replaceAll("\\s+", " ");
+            if (!v.isEmpty()) {
+                returned.add(v);
+            }
+        }
+        return returned;
+    }
+    
+    public List<String> getAuthors() {
+        return this.authors;
+    }
+    
+    public List<String> getTags() {
+        return this.tags;
+    }
+
     final public String toBibTex() {
+        if (this.authors == null) {
+            System.out.println("Delete db.txt!");
+            System.exit(1);
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("@").append(this.referenceType).append("{");
         sb.append(getID()).append(",\n");
@@ -78,7 +120,11 @@ public abstract class Reference implements Serializable {
                 continue;
             }
             sb.append("\t").append(field.getName()).append(" = {");
-            sb.append(fields.get(field)).append("},\n");
+            if (field == BibtexReferenceField.AUTHOR) {
+                sb.append(String.join(" and ", authors)).append("},\n");
+            } else {
+                sb.append(fields.get(field)).append("},\n");
+            }
         }
         sb.append("}");
         return sb.toString();

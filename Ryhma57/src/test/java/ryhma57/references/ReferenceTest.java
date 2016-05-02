@@ -5,6 +5,7 @@
  */
 package ryhma57.references;
 
+import java.util.List;
 import java.util.EnumSet;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -66,6 +67,15 @@ public class ReferenceTest {
         EnumSet<BibtexReferenceField> result = instance.getRequiredFields();
         assertEquals(expResult, result);
        
+    }
+    
+    @Test
+    public void testSetField() {
+        Reference r = new Article();
+        r.setField(AUTHOR, " test test, test test, test  test,");
+        String bibtex = r.toBibTex();
+        
+        assertTrue(bibtex.contains("author = {test test and test test and test test}"));
     }
    
 }

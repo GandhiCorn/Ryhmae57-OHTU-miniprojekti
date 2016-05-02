@@ -5,7 +5,7 @@ import static ryhma57.backend.ReferenceType.*
 import java.nio.file.Files
 import java.nio.file.Paths
 
-scenario "Lisää uusi referenssi",{
+scenario "Automaattisesti luo id",{
     given "Applikaatio on olemassa ja meillä on fieldit", {
         Storage.removeTmpFiles()
         app = new Application()

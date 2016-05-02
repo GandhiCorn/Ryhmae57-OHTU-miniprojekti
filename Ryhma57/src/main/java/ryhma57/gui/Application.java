@@ -79,10 +79,17 @@ public class Application {
             updateViewList();
             this.searchMode = false;
         } else {
+            List<Reference> resultList = storage.getReferenceList().search(query);
             System.out.println("Search with query: " + query);
             window.getListView().clear();
-            for(int i = 1; i < 10; i++) {
-                window.getListView().createRow("abc"+i, "Search result");
+            for (Reference r : resultList) {
+                for (BibtexReferenceField f : r.getExistingFields()) {
+                    String row = r.getField(f);
+                    if (row.length() > 0) {
+                        window.getListView().createRow(f.getName(), row);
+                    }
+                }
+                window.getListView().createRow("", "");
             }
             this.searchMode = true;
         }

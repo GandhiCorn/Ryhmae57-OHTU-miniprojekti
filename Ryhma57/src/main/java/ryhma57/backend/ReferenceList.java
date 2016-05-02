@@ -52,6 +52,20 @@ public class ReferenceList implements Serializable {
         return this.ids.contains(id);
     }
     
+    
+    public List<Reference> search(String word) {
+        List<Reference> searchList = new ArrayList<Reference>() {};
+        for (Reference r : list) {
+            for (BibtexReferenceField f : r.getExistingFields()) {
+                if (r.getField(f).contains(word)) {
+                    searchList.add(r);
+                    break;
+                }
+            }
+        }
+        return searchList;
+    }
+    
     /* Metodi pelkkien kirjaolioiden saamiseksi
     */
 //    public List<Book> getBooks() {

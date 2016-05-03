@@ -1,5 +1,6 @@
 # Ryhmae57-OHTU-miniprojekti
 [![Build Status](https://travis-ci.org/GandhiCorn/Ryhmae57-OHTU-miniprojekti.svg?branch=master)](https://travis-ci.org/GandhiCorn/Ryhmae57-OHTU-miniprojekti)
+[![GitHub release](https://img.shields.io/badge/release-sprint4-brightgreen.svg?style=flat)](https://github.com/GandhiCorn/Ryhmae57-OHTU-miniprojekti/releases/latest)
 
 Tämä on ohjelmistotuotannon projekti.
 

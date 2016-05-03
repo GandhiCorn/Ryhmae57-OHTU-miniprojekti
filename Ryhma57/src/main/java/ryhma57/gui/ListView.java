@@ -94,7 +94,8 @@ public class ListView extends JPanel implements MouseListener, ActionListener {
         c.gridx = 4;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridwidth = 1;
-        c.weightx = 1.0;
+        c.weightx = 0.0;
+        c.anchor = GridBagConstraints.EAST;
         this.add(tagLabel, c);
         this.revalidate();
     }

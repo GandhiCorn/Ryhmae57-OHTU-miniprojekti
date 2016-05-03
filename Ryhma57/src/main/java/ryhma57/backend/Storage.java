@@ -46,33 +46,31 @@ public class Storage {
                 }
             }
         }
-        try {
-            out = new ObjectOutputStream(new FileOutputStream("db.txt"));
-            list.addReference(reference);
-            out.writeObject(list);
-            out.flush();
-        } catch (IOException ex) {
-            Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
-            return "exception happened";
+        list.addReference(reference);
+        if (!writeDB()) {
+            return "Exception happened";
         }
         validator.setReferenceList(list);
         return null;
     }
 
     public void removeReference(Reference reference) {
+        list.deleteReference(reference);
+        writeDB();
+        validator.setReferenceList(list);
+    }
+    
+    private boolean writeDB() {
         try {
-            writer = new PrintWriter("db.txt");
-            writer.print("");
-            writer.close();
-            list.deleteReference(reference);
             out = new ObjectOutputStream(new FileOutputStream("db.txt"));
             out.writeObject(list);
             out.flush();
+            return true;
         } catch (IOException ex) {
             Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        validator.setReferenceList(list);
-    }
+    } 
 
     public void generateBibTex() {
         try {

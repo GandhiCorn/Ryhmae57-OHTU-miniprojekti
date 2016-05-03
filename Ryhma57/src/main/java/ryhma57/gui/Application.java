@@ -1,5 +1,6 @@
 package ryhma57.gui;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,11 +41,16 @@ public class Application {
         }
     }
 
+    private void createRowToList(Reference ref) {
+        window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE),
+                Arrays.asList(new String[]{"tagA", "tagB"}));
+    }
+
     private void updateViewList() {
         List<Reference> list = storage.getReferenceList().getAll();
         window.getListView().clear();
         for (Reference ref : list) {
-            window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
+            createRowToList(ref);
         }
     }
 
@@ -71,7 +77,7 @@ public class Application {
             window.setErrorMessage(error);
         } else {
             window.setErrorMessage("Reference saved successfully");
-            window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE));
+            createRowToList(ref);
         }
     }
 

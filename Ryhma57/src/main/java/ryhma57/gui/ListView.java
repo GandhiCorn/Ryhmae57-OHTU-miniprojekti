@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -41,7 +42,7 @@ public class ListView extends JPanel implements MouseListener, ActionListener {
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 2;
+        c.gridwidth = 1;
         c.weightx = c.weighty = 1.0;
         c.ipadx = c.ipady = 10;
         c.anchor = GridBagConstraints.CENTER;
@@ -52,13 +53,25 @@ public class ListView extends JPanel implements MouseListener, ActionListener {
     }
 
     public void createRow(String id, String name) {
+        createRow(id, name, null);
+    }
+
+    public void createRow(String id, String name, List<String> tags) {
         GridBagConstraints c = new GridBagConstraints();
+        String tagStr = " ";
+
+        if(tags != null && tags.size() > 0) {
+            tagStr = String.join("] [", tags);
+            tagStr = "[" + tagStr + "]";
+        }
 
         /* Remove the placeholder */
         if (this.placeholder.getParent() == this) {
             this.remove(this.placeholder);
         }
 
+        /* id column */
+        JLabel idLabel = new JLabel(id);
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
         c.gridy = this.length++;
@@ -66,15 +79,23 @@ public class ListView extends JPanel implements MouseListener, ActionListener {
         c.weightx = c.weighty = 0.0;
         c.ipadx = c.ipady = 10;
         c.anchor = GridBagConstraints.WEST;
-
-        JLabel idLabel = new JLabel(id);
-        JLabel nameLabel = new JLabel(name);
         this.add(idLabel, c);
+
+        /* name column */
+        JLabel nameLabel = new JLabel(name);
         c.gridx = 1;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridwidth = 3;
         c.weightx = 1.0;
         this.add(nameLabel, c);
+
+        /* tags column */
+        JLabel tagLabel = new JLabel(tagStr);
+        c.gridx = 4;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
+        c.weightx = 1.0;
+        this.add(tagLabel, c);
         this.revalidate();
     }
 

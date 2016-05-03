@@ -74,15 +74,15 @@ public abstract class Reference implements Serializable {
             //FIXME we should propably throw exception here.
             System.out.println("Invalid field");
         }
-
-        if (field.getName().equals("author")) {
+        
+        if (field == BibtexReferenceField.AUTHOR) {
             this.authors = splitToList(value);
         }
-
-        if (field.getName().equals("tag")) {
+        
+        if (field == BibtexReferenceField.TAGS) {
             this.tags = splitToList(value);
         }
-
+        
         fields.put(field, value);
     }
 
@@ -98,11 +98,11 @@ public abstract class Reference implements Serializable {
         }
         return returned;
     }
-    
+
     public List<String> getAuthors() {
         return this.authors;
     }
-    
+
     public List<String> getTags() {
         return this.tags;
     }
@@ -112,19 +112,22 @@ public abstract class Reference implements Serializable {
             System.out.println("Delete db.txt!");
             System.exit(1);
         }
+        
         StringBuilder sb = new StringBuilder();
         sb.append("@").append(this.referenceType).append("{");
         sb.append(getID()).append(",\n");
+        
         for (BibtexReferenceField field : this.fields.keySet()) {
             if (field == BibtexReferenceField.ID) {
                 continue;
             }
             sb.append("\t").append(field.getName()).append(" = {");
             if (field == BibtexReferenceField.AUTHOR) {
-                sb.append(String.join(" and ", authors)).append("},\n");
+                sb.append(String.join(" and ", authors));
             } else {
-                sb.append(fields.get(field)).append("},\n");
+                sb.append(fields.get(field));
             }
+            sb.append("},\n");
         }
         sb.append("}");
         return sb.toString();

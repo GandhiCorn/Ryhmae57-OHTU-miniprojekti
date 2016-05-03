@@ -43,7 +43,7 @@ public class Application {
 
     private void createRowToList(Reference ref) {
         window.getListView().createRow(ref.getID(), ref.getField(BibtexReferenceField.TITLE),
-                Arrays.asList(new String[]{"tagA", "tagB"}));
+                ref.getTags());
     }
 
     private void updateViewList() {

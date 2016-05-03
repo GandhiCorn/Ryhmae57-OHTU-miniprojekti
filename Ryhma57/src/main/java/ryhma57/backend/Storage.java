@@ -21,6 +21,7 @@ public class Storage {
     private PrintWriter writer;
     private ReferenceList list;
     private Validator validator;
+    
 
     public Storage() {
         list = new ReferenceList();
@@ -34,7 +35,14 @@ public class Storage {
             return message;
         }
         if (!validator.hasField(reference, BibtexReferenceField.ID)) {
-            String newID = reference.getField(BibtexReferenceField.AUTHOR).charAt(0) + reference.getField(BibtexReferenceField.YEAR);
+
+        String firstletters = "";   
+            for (String author : reference.getAuthors()) {
+                String firstletter = "" + author.charAt(0);
+                firstletters = firstletters + firstletter;
+            }
+
+            String newID = firstletters + reference.getField(BibtexReferenceField.YEAR);
             reference.setField(BibtexReferenceField.ID, newID);
         }
         if (validator.hasIDUsed(reference.getID())) {
@@ -100,7 +108,7 @@ public class Storage {
     public ReferenceList getReferenceList() {
         return list;
     }
-    
+
     public static void removeTmpFiles() {
         try {
             Files.delete(Paths.get("references.bib"));

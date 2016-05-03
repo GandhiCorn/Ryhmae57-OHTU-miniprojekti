@@ -95,4 +95,15 @@ public class ReferenceListTest {
         list.addReference(r1);
         assertEquals(list.size(), 1);
     }
+    
+    @Test
+    public void testSearch() {
+        list.addReference(r1);
+        list.addReference(r2);
+        list.addReference(r3);
+        List<Reference> result = list.search("ID1");
+        assertEquals(true, result.contains(r1));
+        assertEquals(false, result.contains(r2));
+        assertEquals(false, result.contains(r3));
+    }
 }

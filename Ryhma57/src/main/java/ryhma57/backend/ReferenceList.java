@@ -57,7 +57,7 @@ public class ReferenceList implements Serializable {
         List<Reference> searchList = new ArrayList<Reference>() {};
         for (Reference r : list) {
             for (BibtexReferenceField f : r.getExistingFields()) {
-                if (r.getField(f).contains(word)) {
+                if (r.getField(f) != null && r.getField(f).contains(word)) {
                     searchList.add(r);
                     break;
                 }
